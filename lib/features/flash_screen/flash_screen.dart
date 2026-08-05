@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
-import '../onboarding_screen/onbording_screen.dart';
-import '../../core/widgets/slanh_pet_logo.dart';
-// import '../../core/widgets/splash_indicator.dart';
-import '../../core/widgets/decorative_circle.dart';
+import 'package:slanh_pet_application/features/onboarding_screen/onbording_screen.dart';
+import 'package:slanh_pet_application/core/widgets/slanh_pet_logo.dart';
+// import 'package:slanh_pet_application/core/widgets/splash_indicator.dart';
+import 'package:slanh_pet_application/core/widgets/decorative_circle.dart';
 
 class FlashScreen extends StatefulWidget {
   const FlashScreen({super.key});
@@ -31,7 +31,7 @@ class _FlashScreenState extends State<FlashScreen> {
       PageRouteBuilder<void>(
         transitionDuration: const Duration(milliseconds: 500),
         pageBuilder: (context, animation, secondaryAnimation) {
-          return const OnbordingScreen();
+          return const OnboardingScreen();
         },
         transitionsBuilder: (context, animation, secondaryAnimation, child) {
           return FadeTransition(opacity: animation, child: child);
