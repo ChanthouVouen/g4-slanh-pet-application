@@ -2,26 +2,42 @@ import 'package:flutter/material.dart';
 import '../constants/app_colors.dart';
 
 class SplashIndicator extends StatelessWidget {
-  const SplashIndicator({super.key});
+  const SplashIndicator({
+    super.key,
+    this.currentPage = 0,
+    this.pageCount = 3,
+  });
+
+  final int currentPage;
+  final int pageCount;
 
   @override
   Widget build(BuildContext context) {
     return Row(
       mainAxisSize: MainAxisSize.min,
-      children: [
-        Container(
-          width: 30,
-          height: 6,
-          decoration: BoxDecoration(
-            color: AppColors.indicatorActive,
-            borderRadius: BorderRadius.circular(100),
-          ),
-        ),
-        const SizedBox(width: 8),
-        const SplashDot(),
-        const SizedBox(width: 8),
-        const SplashDot(),
-      ],
+      children: List.generate(pageCount, (index) {
+        final isActive = index == currentPage;
+        return Padding(
+          padding: EdgeInsets.only(right: index == pageCount - 1 ? 0 : 8),
+          child: isActive ? const _SplashBar() : const SplashDot(),
+        );
+      }),
+    );
+  }
+}
+
+class _SplashBar extends StatelessWidget {
+  const _SplashBar();
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: 30,
+      height: 6,
+      decoration: BoxDecoration(
+        color: AppColors.orange,
+        borderRadius: BorderRadius.circular(100),
+      ),
     );
   }
 }
