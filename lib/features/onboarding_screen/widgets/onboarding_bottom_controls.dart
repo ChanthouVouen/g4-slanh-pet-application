@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:slanh_pet_application/core/constants/app_colors.dart';
+import 'package:slanh_pet_application/core/constants/onboarding_screen/onboarding_string.dart';
 
 class OnboardingBottomControls extends StatelessWidget {
   const OnboardingBottomControls({
@@ -20,7 +21,9 @@ class OnboardingBottomControls extends StatelessWidget {
       color: AppColors.onboardingBackground,
       child: AnimatedSwitcher(
         duration: const Duration(milliseconds: 220),
-        child: isLastPage ? _buildGetStartedButton() : _buildNavigationButtons(),
+        child: isLastPage
+            ? _buildGetStartedButton()
+            : _buildNavigationButtons(),
       ),
     );
   }
@@ -42,7 +45,7 @@ class OnboardingBottomControls extends StatelessWidget {
                 ),
               ),
               child: const Text(
-                'Skip',
+                OnboardingString.skipButton,
                 style: TextStyle(fontSize: 15, fontWeight: FontWeight.w500),
               ),
             ),
@@ -63,7 +66,7 @@ class OnboardingBottomControls extends StatelessWidget {
                 ),
               ),
               child: const Text(
-                'Next →',
+                OnboardingString.nextButton,
                 style: TextStyle(fontSize: 15, fontWeight: FontWeight.w800),
               ),
             ),
@@ -89,7 +92,7 @@ class OnboardingBottomControls extends StatelessWidget {
           ),
         ),
         child: const Text(
-          'Get Started 🐾',
+          OnboardingString.getStartedButton,
           style: TextStyle(fontSize: 16, fontWeight: FontWeight.w800),
         ),
       ),
