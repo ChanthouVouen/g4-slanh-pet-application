@@ -67,3 +67,5 @@ app.*.map.json
 .idea/
 .vscode/
 *.iml
+
+node_modules

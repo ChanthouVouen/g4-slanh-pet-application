@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:slanh_pet_application/core/constants/app_colors.dart';
+import 'package:slanh_pet_application/core/constants/onboarding_screen/onboarding_string.dart';
 import 'package:slanh_pet_application/features/auth/login/login.dart';
 import 'package:slanh_pet_application/features/onboarding_screen/data/models/onboarding_model.dart';
 import 'package:slanh_pet_application/features/onboarding_screen/widgets/onboarding_bottom_controls.dart';
@@ -19,24 +20,18 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   static const List<OnboardingModel> _pages = [
     OnboardingModel(
       imagePath: 'assets/images/onboarding_shop.jpg',
-      title: 'Everything For Your\nPet',
-      description:
-          'Shop premium food, toys and accessories\n'
-          'from trusted brands worldwide.',
+      title: OnboardingString.page1Title,
+      description: OnboardingString.page1Description,
     ),
     OnboardingModel(
       imagePath: 'assets/images/onboarding_care.jpg',
-      title: 'Professional Pet\nCare',
-      description:
-          'Book vet appointments, grooming, training\n'
-          'and hotel stays in seconds.',
+      title: OnboardingString.page2Title,
+      description: OnboardingString.page2Description,
     ),
     OnboardingModel(
       imagePath: 'assets/images/onboarding_partner.jpg',
-      title: 'Find Your Pet\nPartner',
-      description:
-          'Adopt or buy pets from verified breeders\n'
-          'near you with full health records.',
+      title: OnboardingString.page3Title,
+      description: OnboardingString.page3Description,
     ),
   ];
 
@@ -64,7 +59,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
 
   void _finishOnboarding() {
     Navigator.of(context).pushReplacement(
-      MaterialPageRoute<void>(builder: (context) => const LoginScreen()),
+      MaterialPageRoute<void>(builder: (context) => LoginScreen()),
     );
   }
 
