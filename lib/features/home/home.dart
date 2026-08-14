@@ -1,10 +1,19 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:slanh_pet_application/core/navigation/bottom_nav_routes.dart';
+import 'package:slanh_pet_application/core/widgets/navigation_bar.dart';
 import 'package:slanh_pet_application/features/auth/login/login.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
+
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  static const int _tabIndex = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -79,6 +88,11 @@ class HomeScreen extends StatelessWidget {
             ],
           );
         },
+      ),
+      bottomNavigationBar: CustomBottomNavBar(
+        currentIndex: _tabIndex,
+        onTap: (index) =>
+            switchBottomNavTab(context, currentIndex: _tabIndex, index: index),
       ),
     );
   }
