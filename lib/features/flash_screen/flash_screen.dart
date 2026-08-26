@@ -27,6 +27,8 @@ class _FlashScreenState extends State<FlashScreen> {
 
     await minDelay;
 
+    if (!mounted) return;
+
     Navigator.of(context).pushReplacement(
       PageRouteBuilder<void>(
         transitionDuration: const Duration(milliseconds: 500),
