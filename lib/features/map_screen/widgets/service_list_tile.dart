@@ -7,11 +7,15 @@ class ServiceListTile extends StatelessWidget {
   const ServiceListTile({
     super.key,
     required this.location,
+    required this.distanceKm,
     required this.onTap,
     required this.onDirections,
   });
 
   final ServiceLocation location;
+
+  /// Distance from the user's current position, or null while it's unknown.
+  final double? distanceKm;
   final VoidCallback onTap;
   final VoidCallback onDirections;
 
@@ -31,23 +35,7 @@ class ServiceListTile extends StatelessWidget {
           padding: const EdgeInsets.all(14),
           child: Row(
             children: [
-              Container(
-                width: 48,
-                height: 48,
-                decoration: BoxDecoration(
-                  color: location.isClinic
-                      ? const Color(0xFFFCE4E1)
-                      : const Color(0xFFFCE8D6),
-                  borderRadius: BorderRadius.circular(14),
-                ),
-                child: Icon(
-                  location.isClinic
-                      ? Icons.medical_services_rounded
-                      : Icons.content_cut_rounded,
-                  color: const Color(0xFF49345C),
-                  size: 22,
-                ),
-              ),
+              _Thumbnail(location: location),
               const SizedBox(width: 12),
               Expanded(
                 child: Column(
@@ -62,33 +50,30 @@ class ServiceListTile extends StatelessWidget {
                         fontWeight: FontWeight.w800,
                       ),
                     ),
-                    const SizedBox(height: 3),
-                    Row(
-                      children: [
-                        const Icon(
-                          Icons.star_rounded,
-                          size: 14,
-                          color: Color(0xFFFFB800),
+                    if (location.address.isNotEmpty) ...[
+                      const SizedBox(height: 3),
+                      Text(
+                        location.address,
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        style: const TextStyle(
+                          fontSize: 12.5,
+                          fontWeight: FontWeight.w600,
+                          color: subtitleGray,
                         ),
-                        const SizedBox(width: 3),
-                        Text(
-                          location.rating.toStringAsFixed(1),
-                          style: const TextStyle(
-                            fontSize: 12.5,
-                            fontWeight: FontWeight.w700,
-                          ),
+                      ),
+                    ],
+                    if (distanceKm != null) ...[
+                      const SizedBox(height: 3),
+                      Text(
+                        '${distanceKm!.toStringAsFixed(1)} km away',
+                        style: const TextStyle(
+                          fontSize: 12.5,
+                          fontWeight: FontWeight.w600,
+                          color: subtitleGray,
                         ),
-                        const SizedBox(width: 8),
-                        Text(
-                          '${location.distanceKm.toStringAsFixed(1)} km',
-                          style: const TextStyle(
-                            fontSize: 12.5,
-                            fontWeight: FontWeight.w600,
-                            color: subtitleGray,
-                          ),
-                        ),
-                      ],
-                    ),
+                      ),
+                    ],
                   ],
                 ),
               ),
@@ -101,6 +86,45 @@ class ServiceListTile extends StatelessWidget {
           ),
         ),
       ),
+    );
+  }
+}
+
+class _Thumbnail extends StatelessWidget {
+  const _Thumbnail({required this.location});
+
+  final ServiceLocation location;
+
+  @override
+  Widget build(BuildContext context) {
+    final imageUrl = location.imageUrl;
+    return Container(
+      width: 48,
+      height: 48,
+      clipBehavior: Clip.antiAlias,
+      decoration: BoxDecoration(
+        color: location.isClinic
+            ? const Color(0xFFFCE4E1)
+            : const Color(0xFFFCE8D6),
+        borderRadius: BorderRadius.circular(14),
+      ),
+      child: imageUrl == null || imageUrl.isEmpty
+          ? _fallbackIcon()
+          : Image.network(
+              imageUrl,
+              fit: BoxFit.cover,
+              errorBuilder: (context, error, stackTrace) => _fallbackIcon(),
+            ),
+    );
+  }
+
+  Widget _fallbackIcon() {
+    return Icon(
+      location.isClinic
+          ? Icons.medical_services_rounded
+          : Icons.content_cut_rounded,
+      color: const Color(0xFF49345C),
+      size: 22,
     );
   }
 }

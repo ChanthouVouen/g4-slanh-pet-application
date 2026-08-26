@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 
 import '../models/nearby_service.dart';
 
-/// Card summarizing one nearby service in the "Near You" list.
 class NearbyServiceCard extends StatelessWidget {
   const NearbyServiceCard({
     super.key,
@@ -109,10 +108,14 @@ class _Thumbnail extends StatelessWidget {
           height: 120,
           width: double.infinity,
           decoration: BoxDecoration(
-            color: service.accentColor.withValues(alpha: 0.12),
+            // color: service.accentColor.withValues(alpha: 0.12),
             borderRadius: BorderRadius.circular(16),
+            image: DecorationImage(
+              image: NetworkImage(service.imageUrl),
+              fit: BoxFit.cover,
+              alignment: Alignment.topCenter,
+            ),
           ),
-          child: Icon(service.icon, size: 48, color: service.accentColor),
         ),
         if (service.isOpenNow)
           Positioned(

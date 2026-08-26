@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-/// A small blue dot marking the user's current position on the map.
 class CurrentLocationDot extends StatelessWidget {
   const CurrentLocationDot({super.key});
 
@@ -8,7 +7,7 @@ class CurrentLocationDot extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       width: 60,
       height: 60,
       child: Image.asset('assets/images/cute_cat.png'),
