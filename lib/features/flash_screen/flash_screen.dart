@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
-import '../onboarding_screen/onbording_screen.dart';
-import '../../core/widgets/slanh_pet_logo.dart';
-// import '../../core/widgets/splash_indicator.dart';
-import '../../core/widgets/decorative_circle.dart';
+import 'package:slanh_pet_application/core/constants/flash_screen/flash_screen_string.dart';
+import 'package:slanh_pet_application/features/onboarding_screen/onbording_screen.dart';
+import 'package:slanh_pet_application/core/widgets/slanh_pet_logo.dart';
+import 'package:slanh_pet_application/core/widgets/decorative_circle.dart';
 
 class FlashScreen extends StatefulWidget {
   const FlashScreen({super.key});
@@ -31,7 +31,7 @@ class _FlashScreenState extends State<FlashScreen> {
       PageRouteBuilder<void>(
         transitionDuration: const Duration(milliseconds: 500),
         pageBuilder: (context, animation, secondaryAnimation) {
-          return const OnbordingScreen();
+          return const OnboardingScreen();
         },
         transitionsBuilder: (context, animation, secondaryAnimation, child) {
           return FadeTransition(opacity: animation, child: child);
@@ -75,7 +75,7 @@ class _FlashScreenState extends State<FlashScreen> {
                     const SizedBox(height: 32),
 
                     const Text(
-                      'Slanh Pet',
+                      FlashScreenString.appName,
                       textAlign: TextAlign.center,
                       style: TextStyle(
                         fontSize: 36,
@@ -89,7 +89,7 @@ class _FlashScreenState extends State<FlashScreen> {
                     const SizedBox(height: 14),
 
                     Text(
-                      'Your Complete Pet Care Application',
+                      FlashScreenString.tagline,
                       textAlign: TextAlign.center,
                       style: TextStyle(
                         color: Colors.white.withAlpha(235),

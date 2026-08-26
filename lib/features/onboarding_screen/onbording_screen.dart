@@ -1,15 +1,103 @@
 import 'package:flutter/material.dart';
+import 'package:slanh_pet_application/core/constants/app_colors.dart';
+import 'package:slanh_pet_application/core/constants/onboarding_screen/onboarding_string.dart';
+import 'package:slanh_pet_application/features/auth/login/login.dart';
+import 'package:slanh_pet_application/features/onboarding_screen/data/models/onboarding_model.dart';
+import 'package:slanh_pet_application/features/onboarding_screen/widgets/onboarding_bottom_controls.dart';
+import 'package:slanh_pet_application/features/onboarding_screen/widgets/onboarding_page.dart';
 
-class OnbordingScreen extends StatefulWidget {
-  const OnbordingScreen({super.key});
+class OnboardingScreen extends StatefulWidget {
+  const OnboardingScreen({super.key});
 
   @override
-  State<OnbordingScreen> createState() => _OnbordingScreenState();
+  State<OnboardingScreen> createState() => _OnboardingScreenState();
 }
 
-class _OnbordingScreenState extends State<OnbordingScreen> {
+class _OnboardingScreenState extends State<OnboardingScreen> {
+  final PageController _pageController = PageController();
+  int _currentPage = 0;
+
+  static const List<OnboardingModel> _pages = [
+    OnboardingModel(
+      imagePath: 'assets/images/onboarding_shop.jpg',
+      title: OnboardingString.page1Title,
+      description: OnboardingString.page1Description,
+    ),
+    OnboardingModel(
+      imagePath: 'assets/images/onboarding_care.jpg',
+      title: OnboardingString.page2Title,
+      description: OnboardingString.page2Description,
+    ),
+    OnboardingModel(
+      imagePath: 'assets/images/onboarding_partner.jpg',
+      title: OnboardingString.page3Title,
+      description: OnboardingString.page3Description,
+    ),
+  ];
+
+  bool get _isLastPage => _currentPage == _pages.length - 1;
+
+  void _nextPage() {
+    if (_isLastPage) {
+      _finishOnboarding();
+      return;
+    }
+
+    _pageController.nextPage(
+      duration: const Duration(milliseconds: 360),
+      curve: Curves.easeOutCubic,
+    );
+  }
+
+  void _skipOnboarding() {
+    _pageController.animateToPage(
+      _pages.length - 1,
+      duration: const Duration(milliseconds: 420),
+      curve: Curves.easeOutCubic,
+    );
+  }
+
+  void _finishOnboarding() {
+    Navigator.of(context).pushReplacement(
+      MaterialPageRoute<void>(builder: (context) => LoginScreen()),
+    );
+  }
+
+  @override
+  void dispose() {
+    _pageController.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(body: Center(child: Text('Onboarding Screen')));
+    return Scaffold(
+      backgroundColor: AppColors.onboardingBackground,
+      body: SafeArea(
+        child: Column(
+          children: [
+            Expanded(
+              child: PageView.builder(
+                controller: _pageController,
+                itemCount: _pages.length,
+                onPageChanged: (page) => setState(() => _currentPage = page),
+                itemBuilder: (context, index) {
+                  return OnboardingPage(
+                    data: _pages[index],
+                    currentPage: _currentPage,
+                    pageCount: _pages.length,
+                  );
+                },
+              ),
+            ),
+            OnboardingBottomControls(
+              isLastPage: _isLastPage,
+              onSkip: _skipOnboarding,
+              onNext: _nextPage,
+            ),
+          ],
+        ),
+      ),
+    );
   }
 }
