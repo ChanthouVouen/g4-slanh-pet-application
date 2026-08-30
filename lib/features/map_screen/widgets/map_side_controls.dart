@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 
 import 'round_icon_button.dart';
 
-/// Top-right column of floating controls: recenter-on-me.
 class MapSideControls extends StatelessWidget {
   const MapSideControls({
     super.key,

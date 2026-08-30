@@ -6,8 +6,6 @@ import 'package:latlong2/latlong.dart';
 
 import 'package:slanh_pet_application/core/services/map_services/location_service.dart';
 
-/// Tracks the device's live position and keeps the map camera centered on
-/// it until [stopFollowing] is called (e.g. the user drags the map).
 class LiveLocationController extends ChangeNotifier {
   LiveLocationController({
     required this._locationService,
@@ -21,8 +19,6 @@ class LiveLocationController extends ChangeNotifier {
   LatLng? position;
   bool isFollowing = true;
 
-  /// Starts listening for position updates. [onError] is called with a
-  /// user-facing message if permission is denied or the stream fails.
   Future<void> start({required void Function(String message) onError}) async {
     try {
       await _locationService.ensurePermission();
@@ -43,8 +39,6 @@ class LiveLocationController extends ChangeNotifier {
     notifyListeners();
   }
 
-  /// Displays [point] as the current position without moving the camera,
-  /// e.g. after a one-shot location fetch for directions.
   void showPosition(LatLng point) {
     position = point;
     notifyListeners();
