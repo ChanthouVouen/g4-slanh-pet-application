@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:slanh_pet_application/core/constants/app_colors.dart';
 
 import '../models/service_location.dart';
 
@@ -19,14 +20,12 @@ class ServiceListTile extends StatelessWidget {
   final VoidCallback onTap;
   final VoidCallback onDirections;
 
-  static const Color subtitleGray = Color(0xFF8C97A3);
-  static const Color fillGray = Color(0xFFF5F6F8);
-  static const Color orange = Color(0xFFFF663C);
+  static const Color _fillGray = Color(0xFFF5F6F8);
 
   @override
   Widget build(BuildContext context) {
     return Material(
-      color: fillGray,
+      color: _fillGray,
       borderRadius: BorderRadius.circular(16),
       child: InkWell(
         borderRadius: BorderRadius.circular(16),
@@ -59,7 +58,7 @@ class ServiceListTile extends StatelessWidget {
                         style: const TextStyle(
                           fontSize: 12.5,
                           fontWeight: FontWeight.w600,
-                          color: subtitleGray,
+                          color: AppColors.labelGray,
                         ),
                       ),
                     ],
@@ -70,7 +69,7 @@ class ServiceListTile extends StatelessWidget {
                         style: const TextStyle(
                           fontSize: 12.5,
                           fontWeight: FontWeight.w600,
-                          color: subtitleGray,
+                          color: AppColors.labelGray,
                         ),
                       ),
                     ],
@@ -80,7 +79,10 @@ class ServiceListTile extends StatelessWidget {
               IconButton(
                 tooltip: 'Get directions',
                 onPressed: onDirections,
-                icon: const Icon(Icons.directions_rounded, color: orange),
+                icon: const Icon(
+                  Icons.directions_rounded,
+                  color: AppColors.orange,
+                ),
               ),
             ],
           ),
@@ -103,9 +105,7 @@ class _Thumbnail extends StatelessWidget {
       height: 48,
       clipBehavior: Clip.antiAlias,
       decoration: BoxDecoration(
-        color: location.isClinic
-            ? const Color(0xFFFCE4E1)
-            : const Color(0xFFFCE8D6),
+        color: const Color(0xFFFCE4E1),
         borderRadius: BorderRadius.circular(14),
       ),
       child: imageUrl == null || imageUrl.isEmpty
@@ -119,11 +119,9 @@ class _Thumbnail extends StatelessWidget {
   }
 
   Widget _fallbackIcon() {
-    return Icon(
-      location.isClinic
-          ? Icons.medical_services_rounded
-          : Icons.content_cut_rounded,
-      color: const Color(0xFF49345C),
+    return const Icon(
+      Icons.medical_services_rounded,
+      color: AppColors.darkPurple,
       size: 22,
     );
   }

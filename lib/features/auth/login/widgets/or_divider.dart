@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:slanh_pet_application/core/constants/app_colors.dart';
 
 class OrDivider extends StatelessWidget {
   const OrDivider({super.key});
@@ -15,7 +16,7 @@ class OrDivider extends StatelessWidget {
             style: TextStyle(
               fontSize: 13,
               fontWeight: FontWeight.w500,
-              color: Color(0xFF8C97A3),
+              color: AppColors.labelGray,
             ),
           ),
         ),

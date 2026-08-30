@@ -6,7 +6,6 @@ class ServiceLocation {
     required this.name,
     required this.address,
     required this.position,
-    required this.isClinic,
     this.imageUrl,
   });
 
@@ -14,6 +13,5 @@ class ServiceLocation {
   final String name;
   final String address;
   final LatLng position;
-  final bool isClinic;
   final String? imageUrl;
 }

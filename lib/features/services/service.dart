@@ -2,13 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:slanh_pet_application/core/navigation/bottom_nav_routes.dart';
 import 'package:slanh_pet_application/core/widgets/app_search_field.dart';
 import 'package:slanh_pet_application/core/widgets/navigation_bar.dart';
+import 'package:slanh_pet_application/features/clinic_detail/clinic_detail.dart';
 import 'package:slanh_pet_application/features/map_screen/map_screen.dart';
+import 'package:slanh_pet_application/features/services/models/service_model.dart';
 
-import 'data/service_categories_data.dart';
-import 'models/nearby_service.dart';
 import 'widgets/near_you_header.dart';
-import 'widgets/nearby_service_card.dart';
-import 'widgets/service_category_grid.dart';
+import 'widgets/clinic_card_card.dart';
 import 'widgets/services_top_bar.dart';
 import 'widgets/vet_promo_banner.dart';
 import './data/service_data.dart';
@@ -23,8 +22,7 @@ class ServiceScreen extends StatefulWidget {
 class _ServiceScreenState extends State<ServiceScreen> {
   static const int _tabIndex = 2;
 
-  late final Future<List<NearbyService>> _servicesFuture = getCollectionData()
-      .then((services) => services.map(NearbyService.fromMap).toList());
+  late final Future<List<ServiceModel>> _serviceData;
 
   void _openMapView(BuildContext context) {
     Navigator.of(
@@ -39,6 +37,13 @@ class _ServiceScreenState extends State<ServiceScreen> {
   }
 
   @override
+  void initState() {
+    super.initState();
+
+    _serviceData = getServiceData();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color(0xFFFBF3EE),
@@ -49,7 +54,7 @@ class _ServiceScreenState extends State<ServiceScreen> {
             ServicesTopBar(onMapView: () => _openMapView(context)),
             const SizedBox(height: 16),
 
-            const AppSearchField(hintText: 'Search services near you...'),
+            AppSearchField(hintText: 'Search services near you...'),
             const SizedBox(height: 20),
 
             VetPromoBanner(
@@ -57,43 +62,28 @@ class _ServiceScreenState extends State<ServiceScreen> {
             ),
             const SizedBox(height: 24),
 
-            const Text(
-              'Service Categories',
-              style: TextStyle(fontSize: 17, fontWeight: FontWeight.w800),
-            ),
-            const SizedBox(height: 14),
-
-            // ServiceCategoryGrid(
-            //   categories: serviceCategories,
-            //   onCategoryTap: (category) =>
-            //       _showComingSoon(context, '${category.label} coming soon.'),
-            // ),
-            // const SizedBox(height: 24),
             NearYouHeader(
               onFilterTap: () =>
                   _showComingSoon(context, 'Filters coming soon.'),
             ),
             const SizedBox(height: 14),
 
-            FutureBuilder<List<NearbyService>>(
-              future: _servicesFuture,
+            FutureBuilder<List<ServiceModel>>(
+              future: _serviceData,
               builder: (context, snapshot) {
-                if (snapshot.connectionState != ConnectionState.done) {
-                  return const Padding(
-                    padding: EdgeInsets.symmetric(vertical: 24),
-                    child: Center(child: CircularProgressIndicator()),
-                  );
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return const Center(child: CircularProgressIndicator());
                 }
 
                 if (snapshot.hasError) {
-                  return Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 24),
-                    child: Text('Failed to load services: ${snapshot.error}'),
-                  );
+                  return Center(child: Text('Error: ${snapshot.error}'));
                 }
 
-                final services = snapshot.data ?? const [];
+                if (!snapshot.hasData || snapshot.data!.isEmpty) {
+                  return const Center(child: Text('No services found'));
+                }
 
+                final services = snapshot.data!;
                 if (services.isEmpty) {
                   return const Padding(
                     padding: EdgeInsets.symmetric(vertical: 24),
@@ -104,7 +94,7 @@ class _ServiceScreenState extends State<ServiceScreen> {
                 return Column(
                   children: [
                     for (final service in services) ...[
-                      NearbyServiceCard(
+                      ClinicCard(
                         service: service,
                         onTap: () => _onServiceTap(context, service),
                       ),
@@ -125,7 +115,11 @@ class _ServiceScreenState extends State<ServiceScreen> {
     );
   }
 
-  void _onServiceTap(BuildContext context, NearbyService service) {
-    _showComingSoon(context, 'Opening ${service.name}...');
+  void _onServiceTap(BuildContext context, ServiceModel service) {
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (context) => ClinicDetailsScreen(service: service),
+      ),
+    );
   }
 }

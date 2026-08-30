@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'map_search_field.dart';
 import 'round_icon_button.dart';
 
-/// Back button + search field row pinned to the top of the map.
 class MapTopBar extends StatelessWidget {
   const MapTopBar({
     super.key,

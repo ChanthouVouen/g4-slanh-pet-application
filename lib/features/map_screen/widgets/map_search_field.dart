@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-/// The pill-shaped search field pinned to the top of the map.
 class MapSearchField extends StatelessWidget {
   const MapSearchField({super.key, required this.onChanged});
 

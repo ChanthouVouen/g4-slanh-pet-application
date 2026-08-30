@@ -1,8 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-/// One-time sample data for the `clinics` and `services` collections, keyed
-/// by fixed doc IDs so re-running this is safe — it overwrites the same
-/// documents instead of creating duplicates.
 Future<void> seedSampleServiceLocations() async {
   final firestore = FirebaseFirestore.instance;
   final batch = firestore.batch();

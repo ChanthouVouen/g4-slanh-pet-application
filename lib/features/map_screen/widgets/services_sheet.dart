@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:slanh_pet_application/core/constants/app_colors.dart';
 
 import '../models/service_location.dart';
 import 'service_list_tile.dart';
@@ -23,8 +24,6 @@ class ServicesSheet extends StatelessWidget {
   final double? Function(ServiceLocation location) distanceKmFor;
   final ValueChanged<ServiceLocation> onLocationTap;
   final ValueChanged<ServiceLocation> onDirections;
-
-  static const Color subtitleGray = Color(0xFF8C97A3);
 
   @override
   Widget build(BuildContext context) {
@@ -66,7 +65,7 @@ class ServicesSheet extends StatelessWidget {
                 style: TextStyle(
                   fontSize: 13.5,
                   fontWeight: FontWeight.w500,
-                  color: subtitleGray,
+                  color: AppColors.labelGray,
                 ),
               ),
             ),

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import 'package:slanh_pet_application/core/constants/app_colors.dart';
 import 'package:slanh_pet_application/core/constants/flash_screen/flash_screen_string.dart';
 import 'package:slanh_pet_application/features/onboarding_screen/onbording_screen.dart';
 import 'package:slanh_pet_application/core/widgets/slanh_pet_logo.dart';
@@ -13,8 +14,6 @@ class FlashScreen extends StatefulWidget {
 }
 
 class _FlashScreenState extends State<FlashScreen> {
-  static const Color orange = Color(0xFFFF663C);
-
   @override
   void initState() {
     super.initState();
@@ -45,26 +44,26 @@ class _FlashScreenState extends State<FlashScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: orange,
+      backgroundColor: AppColors.orange,
       body: SafeArea(
         child: Stack(
           children: [
             const Positioned(
               top: 55,
               left: 38,
-              child: DecorativeCircle(size: 76, color: orange),
+              child: DecorativeCircle(size: 76, color: AppColors.orange),
             ),
 
             const Positioned(
               top: -58,
               right: -72,
-              child: DecorativeCircle(size: 190, color: orange),
+              child: DecorativeCircle(size: 190, color: AppColors.orange),
             ),
 
             const Positioned(
               left: -56,
               bottom: -38,
-              child: DecorativeCircle(size: 198, color: orange),
+              child: DecorativeCircle(size: 198, color: AppColors.orange),
             ),
 
             Center(

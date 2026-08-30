@@ -3,10 +3,6 @@ import 'package:latlong2/latlong.dart';
 
 import '../models/service_location.dart';
 
-/// Streams clinic pins from Firestore's `clinics` collection.
-///
-/// Expected fields on each document: `name` (String), `address` (String),
-/// `lat` (number), `long` (number), `picture` (String image URL, optional).
 class ServiceLocationRepository {
   ServiceLocationRepository({FirebaseFirestore? firestore})
     : _firestore = firestore ?? FirebaseFirestore.instance;
@@ -40,7 +36,6 @@ class ServiceLocationRepository {
       address: data['address'] as String? ?? '',
       imageUrl: data['picture'] as String?,
       position: LatLng(lat, long),
-      isClinic: true,
     );
   }
 }
