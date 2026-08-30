@@ -4,6 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:slanh_pet_application/core/navigation/bottom_nav_routes.dart';
 import 'package:slanh_pet_application/core/widgets/navigation_bar.dart';
 import 'package:slanh_pet_application/features/auth/login/login.dart';
+import 'package:slanh_pet_application/features/home/home_page.dart';
+import './widget_home/Popular_product_part/data/product_data.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -17,82 +20,68 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final currentUser = FirebaseAuth.instance.currentUser;
-
-    if (currentUser == null) {
-      return const Scaffold(
-        body: Center(child: Text('No user is currently signed in.')),
-      );
-    }
-
-    final userDocument = FirebaseFirestore.instance
-        .collection('users')
-        .doc(currentUser.uid);
-
     return Scaffold(
       appBar: AppBar(
-        title: const Text('My Account'),
-        actions: [
-          IconButton(
-            tooltip: 'Log out',
-            icon: const Icon(Icons.logout),
-            onPressed: () async {
-              await FirebaseAuth.instance.signOut();
-              if (!context.mounted) return;
-              Navigator.of(context).pushAndRemoveUntil(
-                MaterialPageRoute<void>(
-                  builder: (context) => const LoginScreen(),
-                ),
-                (route) => false,
-              );
-            },
-          ),
-        ],
+        title: const Text('Real-Time Users'),
+        leading: ElevatedButton(
+          onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => HomePage()),
+            );
+          },
+          child: Text("Home Page"),
+        ),
       ),
-      body: StreamBuilder<DocumentSnapshot<Map<String, dynamic>>>(
-        stream: userDocument.snapshots(),
-        builder: (context, userSnapshot) {
-          if (userSnapshot.hasError) {
-            return const Center(child: Text('Unable to load your profile.'));
+      body: StreamBuilder<QuerySnapshot>(
+        // 1. Define the stream from Firestore
+        stream: FirebaseFirestore.instance.collection('products').snapshots(),
+        builder: (context, snapshot) {
+          // 2. Handle errors
+          if (snapshot.hasError) {
+            return Center(child: Text('Error: ${snapshot.error}'));
           }
-          if (!userSnapshot.hasData) {
+
+          // 3. Handle loading state
+          if (snapshot.connectionState == ConnectionState.waiting) {
             return const Center(child: CircularProgressIndicator());
           }
 
-          final profile = userSnapshot.data!.data();
-          if (profile == null) {
-            return const Center(child: Text('Your profile was not found.'));
+          // 4. Check if data is empty
+          if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
+            return const Center(child: Text('No users found.'));
           }
 
-          final role = profile['role'] as String? ?? 'customer';
-          return ListView(
-            padding: const EdgeInsets.all(24),
-            children: [
-              Text(
-                'Welcome, ${profile['fullName'] ?? 'User'}',
-                style: Theme.of(context).textTheme.headlineSmall,
-              ),
-              const SizedBox(height: 20),
-              _InfoCard(
-                title: 'Account information',
-                children: [
-                  _InfoRow(label: 'Email', value: currentUser.email ?? ''),
-                  _InfoRow(label: 'Phone', value: profile['phone'] ?? ''),
-                  _InfoRow(label: 'Role', value: role),
-                ],
-              ),
-              if (role == 'seller') ...[
-                const SizedBox(height: 16),
-                _SellerShopCard(sellerId: currentUser.uid),
-              ],
-            ],
+          // 5. Build list with data
+          final users = snapshot.data!.docs;
+          return ListView.builder(
+            itemCount: users.length,
+            itemBuilder: (context, index) {
+              final user = users[index].data() as Map<String, dynamic>;
+              return ListTile(
+                leading: CircleAvatar(
+                  backgroundColor: Colors.grey[200],
+                  // ប្រសិនបើមាន URL ឱ្យបង្ហាញរូបភាព បើគ្មានទេឱ្យបង្ហាញ Icon ជំនួស
+                  backgroundImage: user['image'] != null
+                      ? NetworkImage(user['image'])
+                      : null,
+                  child: user['image'] == null
+                      ? const Icon(Icons.person)
+                      : null,
+                ),
+
+                title: Text(user['name'] ?? 'No Name'),
+                // subtitle: Text(user['email'] ?? 'No Email'),
+              );
+            },
           );
         },
       ),
       bottomNavigationBar: CustomBottomNavBar(
         currentIndex: _tabIndex,
-        onTap: (index) =>
-            switchBottomNavTab(context, currentIndex: _tabIndex, index: index),
+        onTap: (index) {
+          switchBottomNavTab(context, currentIndex: _tabIndex, index: index);
+        },
       ),
     );
   }
