@@ -20,8 +20,16 @@ class _HomeScreenState extends State<HomeScreen> {
     final currentUser = FirebaseAuth.instance.currentUser;
 
     if (currentUser == null) {
-      return const Scaffold(
-        body: Center(child: Text('No user is currently signed in.')),
+      return Scaffold(
+        body: const Center(child: Text('No user is currently signed in.')),
+        bottomNavigationBar: CustomBottomNavBar(
+          currentIndex: _tabIndex,
+          onTap: (index) => switchBottomNavTab(
+            context,
+            currentIndex: _tabIndex,
+            index: index,
+          ),
+        ),
       );
     }
 
