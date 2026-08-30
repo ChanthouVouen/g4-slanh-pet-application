@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-/// A rounded, shadowed search field shared across the app's tab screens.
 class AppSearchField extends StatelessWidget {
   const AppSearchField({super.key, required this.hintText, this.onChanged});
 
@@ -24,6 +23,7 @@ class AppSearchField extends StatelessWidget {
           ),
         ],
       ),
+
       child: TextField(
         onChanged: onChanged,
         style: const TextStyle(fontSize: 14.5, fontWeight: FontWeight.w500),
@@ -34,23 +34,18 @@ class AppSearchField extends StatelessWidget {
             fontWeight: FontWeight.w500,
             fontSize: 14.5,
           ),
+
           prefixIcon: const Icon(
             Icons.search_rounded,
             color: _hintGray,
             size: 20,
           ),
+
           filled: true,
           fillColor: Colors.white,
           contentPadding: const EdgeInsets.symmetric(vertical: 12),
+
           border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(100),
-            borderSide: BorderSide.none,
-          ),
-          enabledBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(100),
-            borderSide: BorderSide.none,
-          ),
-          focusedBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(100),
             borderSide: BorderSide.none,
           ),

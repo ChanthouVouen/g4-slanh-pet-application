@@ -34,7 +34,7 @@ class CustomGenderDropdown extends StatelessWidget {
               width: double.infinity,
               padding: const EdgeInsets.symmetric(horizontal: 16),
               decoration: BoxDecoration(
-                color: AppColors.inputBackground.withOpacity(0.6),
+                color: AppColors.inputBackground.withValues(alpha: 0.6),
                 borderRadius: BorderRadius.circular(10),
               ),
               child: DropdownButtonHideUnderline(

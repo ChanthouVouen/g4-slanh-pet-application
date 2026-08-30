@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:slanh_pet_application/core/constants/app_colors.dart';
 
 import '../models/route_result.dart';
 
@@ -15,9 +16,6 @@ class RouteInfoBar extends StatelessWidget {
   final String destinationName;
   final VoidCallback onClear;
 
-  static const Color orange = Color(0xFFFF663C);
-  static const Color subtitleGray = Color(0xFF8C97A3);
-
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -32,7 +30,7 @@ class RouteInfoBar extends StatelessWidget {
             padding: const EdgeInsets.all(16),
             child: Row(
               children: [
-                const Icon(Icons.directions_rounded, color: orange, size: 26),
+                const Icon(Icons.directions_rounded, color: AppColors.orange, size: 26),
                 const SizedBox(width: 12),
                 Expanded(
                   child: Column(
@@ -55,7 +53,7 @@ class RouteInfoBar extends StatelessWidget {
                         style: const TextStyle(
                           fontSize: 12.5,
                           fontWeight: FontWeight.w600,
-                          color: subtitleGray,
+                          color: AppColors.labelGray,
                         ),
                       ),
                     ],

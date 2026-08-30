@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:slanh_pet_application/core/constants/app_colors.dart';
 
 import '../models/service_location.dart';
 import 'service_list_tile.dart';
@@ -9,18 +10,20 @@ class ServicesSheet extends StatelessWidget {
     super.key,
     required this.scrollController,
     required this.locations,
-    required this.showingClinicsOnly,
+    required this.isLoading,
+    required this.distanceKmFor,
     required this.onLocationTap,
     required this.onDirections,
   });
 
   final ScrollController scrollController;
   final List<ServiceLocation> locations;
-  final bool showingClinicsOnly;
+  final bool isLoading;
+
+  /// Distance to a location, in km — null while it's still unknown.
+  final double? Function(ServiceLocation location) distanceKmFor;
   final ValueChanged<ServiceLocation> onLocationTap;
   final ValueChanged<ServiceLocation> onDirections;
-
-  static const Color subtitleGray = Color(0xFF8C97A3);
 
   @override
   Widget build(BuildContext context) {
@@ -45,13 +48,16 @@ class ServicesSheet extends StatelessWidget {
           ),
           const SizedBox(height: 16),
           Text(
-            showingClinicsOnly
-                ? '${locations.length} clinics nearby'
-                : '${locations.length} services nearby',
+            '${locations.length} clinics nearby',
             style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w800),
           ),
           const SizedBox(height: 14),
-          if (locations.isEmpty)
+          if (isLoading)
+            const Padding(
+              padding: EdgeInsets.symmetric(vertical: 24),
+              child: Center(child: CircularProgressIndicator()),
+            )
+          else if (locations.isEmpty)
             const Padding(
               padding: EdgeInsets.symmetric(vertical: 24),
               child: Text(
@@ -59,13 +65,14 @@ class ServicesSheet extends StatelessWidget {
                 style: TextStyle(
                   fontSize: 13.5,
                   fontWeight: FontWeight.w500,
-                  color: subtitleGray,
+                  color: AppColors.labelGray,
                 ),
               ),
             ),
           for (final location in locations) ...[
             ServiceListTile(
               location: location,
+              distanceKm: distanceKmFor(location),
               onTap: () => onLocationTap(location),
               onDirections: () => onDirections(location),
             ),

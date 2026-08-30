@@ -13,11 +13,13 @@ class AuthSubmitButton extends StatelessWidget {
     required this.onPressed,
   });
 
+  static const double height = 56;
+
   @override
   Widget build(BuildContext context) {
     return SizedBox(
       width: double.infinity,
-      height: 56,
+      height: height,
       child: ElevatedButton(
         onPressed: isSubmitting ? null : onPressed,
         style: ElevatedButton.styleFrom(

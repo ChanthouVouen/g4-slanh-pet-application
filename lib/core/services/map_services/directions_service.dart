@@ -19,6 +19,54 @@ class DirectionsService {
   const DirectionsService();
 
   static const _baseUrl = 'https://router.project-osrm.org/route/v1/driving';
+  static const _tableUrl = 'https://router.project-osrm.org/table/v1/driving';
+
+  /// Driving distance in kilometers from [origin] to each of [destinations],
+  /// in one request via OSRM's table (distance matrix) service. An entry is
+  /// null if no road route could be found to that destination.
+  Future<List<double?>> getDrivingDistancesKm({
+    required LatLng origin,
+    required List<LatLng> destinations,
+  }) async {
+    if (destinations.isEmpty) return const [];
+
+    final points = [origin, ...destinations];
+    final coordinates = points
+        .map((point) => '${point.longitude},${point.latitude}')
+        .join(';');
+    final destinationIndices = List.generate(
+      destinations.length,
+      (i) => i + 1,
+    ).join(';');
+    final uri = Uri.parse(
+      '$_tableUrl/$coordinates'
+      '?sources=0&destinations=$destinationIndices&annotations=distance',
+    );
+
+    final http.Response response;
+    try {
+      response = await http.get(uri);
+    } catch (_) {
+      throw const DirectionsException(
+        'Could not reach the directions service. Check your connection.',
+      );
+    }
+
+    if (response.statusCode != 200) {
+      throw const DirectionsException('Unable to fetch distances right now.');
+    }
+
+    final body = jsonDecode(response.body) as Map<String, dynamic>;
+    final rows = body['distances'] as List<dynamic>?;
+    final row = (rows == null || rows.isEmpty)
+        ? const []
+        : rows.first as List<dynamic>;
+
+    return [
+      for (final meters in row)
+        meters == null ? null : (meters as num) / 1000.0,
+    ];
+  }
 
   Future<RouteResult> getRoute({
     required LatLng origin,

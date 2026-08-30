@@ -1,20 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:slanh_pet_application/core/constants/app_colors.dart';
+import 'package:slanh_pet_application/features/services/models/service_model.dart';
 
-import '../models/nearby_service.dart';
+class ClinicCard extends StatelessWidget {
+  const ClinicCard({super.key, required this.service, required this.onTap});
 
-/// Card summarizing one nearby service in the "Near You" list.
-class NearbyServiceCard extends StatelessWidget {
-  const NearbyServiceCard({
-    super.key,
-    required this.service,
-    required this.onTap,
-  });
-
-  final NearbyService service;
+  final ServiceModel service;
   final VoidCallback onTap;
-
-  static const Color _subtitleGray = Color(0xFF8C97A3);
-  static const Color _orange = Color(0xFFFF663C);
 
   @override
   Widget build(BuildContext context) {
@@ -40,11 +32,11 @@ class NearbyServiceCard extends StatelessWidget {
               ),
               const SizedBox(height: 3),
               Text(
-                service.tags.join(' • '),
+                'sfd',
                 style: const TextStyle(
                   fontSize: 12.5,
                   fontWeight: FontWeight.w600,
-                  color: _subtitleGray,
+                  color: AppColors.labelGray,
                 ),
               ),
               const SizedBox(height: 8),
@@ -57,7 +49,7 @@ class NearbyServiceCard extends StatelessWidget {
                   ),
                   const SizedBox(width: 3),
                   Text(
-                    '${service.rating} (${service.reviewCount})',
+                    '4.5',
                     style: const TextStyle(
                       fontSize: 12.5,
                       fontWeight: FontWeight.w700,
@@ -67,23 +59,23 @@ class NearbyServiceCard extends StatelessWidget {
                   const Icon(
                     Icons.location_on_rounded,
                     size: 14,
-                    color: _subtitleGray,
+                    color: AppColors.labelGray,
                   ),
                   Text(
-                    ' ${service.distanceKm.toStringAsFixed(1)} km',
+                    '1km',
                     style: const TextStyle(
                       fontSize: 12.5,
                       fontWeight: FontWeight.w600,
-                      color: _subtitleGray,
+                      color: AppColors.labelGray,
                     ),
                   ),
                   const Spacer(),
                   Text(
-                    service.priceFrom,
+                    '20\$',
                     style: const TextStyle(
                       fontSize: 12.5,
                       fontWeight: FontWeight.w800,
-                      color: _orange,
+                      color: AppColors.orange,
                     ),
                   ),
                 ],
@@ -99,7 +91,7 @@ class NearbyServiceCard extends StatelessWidget {
 class _Thumbnail extends StatelessWidget {
   const _Thumbnail({required this.service});
 
-  final NearbyService service;
+  final ServiceModel service;
 
   @override
   Widget build(BuildContext context) {
@@ -109,31 +101,14 @@ class _Thumbnail extends StatelessWidget {
           height: 120,
           width: double.infinity,
           decoration: BoxDecoration(
-            color: service.accentColor.withValues(alpha: 0.12),
             borderRadius: BorderRadius.circular(16),
-          ),
-          child: Icon(service.icon, size: 48, color: service.accentColor),
-        ),
-        if (service.isOpenNow)
-          Positioned(
-            top: 10,
-            right: 10,
-            child: Container(
-              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-              decoration: BoxDecoration(
-                color: const Color(0xFF34C77B),
-                borderRadius: BorderRadius.circular(100),
-              ),
-              child: const Text(
-                'Open Now',
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 11,
-                  fontWeight: FontWeight.w700,
-                ),
-              ),
+            image: DecorationImage(
+              image: NetworkImage(service.picture),
+              fit: BoxFit.cover,
+              alignment: Alignment.topCenter,
             ),
           ),
+        ),
       ],
     );
   }
