@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:slanh_pet_application/features/home/widget_home/Popular_product_part/popular_productcard.dart';
-import 'package:slanh_pet_application/features/services/service.dart';
+import 'package:slanh_pet_application/features/market_screen/market_screen.dart';
 
 class PopularProductPart extends StatelessWidget {
   const PopularProductPart({super.key});
@@ -37,7 +37,7 @@ class PopularProductPart extends StatelessWidget {
                   onTap: () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => ServiceScreen()),
+                      MaterialPageRoute(builder: (context) => MarketScreen()),
                     );
                   },
                   child: const Row(

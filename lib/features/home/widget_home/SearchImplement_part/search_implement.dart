@@ -1,5 +1,8 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:slanh_pet_application/features/home/widget_home/SearchImplement_part/searching_page.dart';
+import 'package:slanh_pet_application/features/home/widget_home/data_users/user_name.dart';
 
 // import 'package:slanh_pet_application/main.dart';
 
@@ -27,20 +30,14 @@ class SearchImplement extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      "Good Morning🌤️",
+                      "Welcome Back🙏🏻",
                       style: TextStyle(
                         color: Colors.white,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-                    Text(
-                      "Sarah Jonhson",
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 22,
-                      ),
-                    ),
+
+                    UserName(),
                   ],
                 ),
                 Container(
