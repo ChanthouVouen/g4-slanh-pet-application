@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:slanh_pet_application/core/navigation/bottom_nav_routes.dart';
+import 'package:slanh_pet_application/core/services/booking/booking_service.dart';
 import 'package:slanh_pet_application/core/widgets/auth_submit_button.dart';
 import 'package:slanh_pet_application/core/widgets/circle_back_button.dart';
 import 'package:slanh_pet_application/core/widgets/navigation_bar.dart';
@@ -45,16 +46,13 @@ class _BookAppointmentScreenState extends State<BookAppointmentScreen> {
   );
 
   int _selectedDateIndex = 0;
-  int _selectedTimeIndex = 0;
+  int _selectedTimeIndex = -1;
   final _notesController = TextEditingController();
+  final _bookingService = BookingService();
+  bool _isSubmitting = false;
 
   double get _servicePrice => widget.service.price;
   double get _total => _servicePrice + _bookingFee;
-
-  static double _parsePrice(String priceFrom) {
-    final match = RegExp(r'[\d.]+').firstMatch(priceFrom);
-    return match == null ? 0 : double.tryParse(match.group(0)!) ?? 0;
-  }
 
   @override
   void dispose() {
@@ -62,48 +60,81 @@ class _BookAppointmentScreenState extends State<BookAppointmentScreen> {
     super.dispose();
   }
 
-  void _confirmBooking() {
+  Future<void> _confirmBooking() async {
+    if (_isSubmitting) return;
+
+    if (_selectedTimeIndex < 0) {
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(const SnackBar(content: Text('Please select a time.')));
+      return;
+    }
+
+    setState(() => _isSubmitting = true);
+
+    final date = _dates[_selectedDateIndex].date;
+    final time = _times[_selectedTimeIndex];
     final summary = BookingSummary.create(
-      clinicName: widget.service.name,
-      date: _dates[_selectedDateIndex].date,
-      time: _times[_selectedTimeIndex],
+      clinicName: widget.service.clinic.name,
+      serviceName: widget.service.name,
+      date: date,
+      time: time,
       total: _total,
-      // total: 10,
     );
 
-    Navigator.of(context).pushReplacement(
-      MaterialPageRoute(
-        builder: (context) => BookingConfirmedScreen(summary: summary),
-      ),
-    );
+    try {
+      final bookingId = await _bookingService.createBooking(
+        service: widget.service,
+        date: date,
+        time: time,
+        servicePrice: _servicePrice,
+        bookingFee: _bookingFee,
+        total: _total,
+        bookingRef: summary.bookingRef,
+        notes: _notesController.text,
+      );
+
+      if (!mounted) return;
+
+      if (bookingId == null) {
+        setState(() => _isSubmitting = false);
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('Please sign in to book an appointment.'),
+          ),
+        );
+        return;
+      }
+
+      Navigator.of(context).pushReplacement(
+        MaterialPageRoute(
+          builder: (context) => BookingConfirmedScreen(summary: summary),
+        ),
+      );
+    } catch (e) {
+      if (!mounted) return;
+      setState(() => _isSubmitting = false);
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Could not save your booking. Please try again.'),
+        ),
+      );
+    }
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: _background,
-      appBar: AppBar(
-        backgroundColor: _background,
-        elevation: 0,
-        leading: const Padding(
-          padding: EdgeInsets.all(8.0),
-          child: CircleBackButton(),
-        ),
-        title: const Text(
-          'Book Appointment',
-          style: TextStyle(
-            color: Colors.black,
-            fontSize: 18,
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-        centerTitle: false,
-      ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            const SizedBox(height: 20),
+            const Positioned(top: 100, left: 16, child: CircleBackButton()),
+            const SizedBox(height: 20),
+
             ClinicCardSummary(
               name: widget.service.clinic.name,
               picture: widget.service.clinic.picture,
@@ -115,13 +146,21 @@ class _BookAppointmentScreenState extends State<BookAppointmentScreen> {
             _buildSectionTitle('Select Date'),
             const SizedBox(height: 12),
 
-            DateSelection(dates: _dates),
+            DateSelection(
+              dates: _dates,
+              selectedIndex: _selectedDateIndex,
+              onSelected: (index) => setState(() => _selectedDateIndex = index),
+            ),
             const SizedBox(height: 24),
 
             _buildSectionTitle('Select Time'),
             const SizedBox(height: 12),
 
-            TimeSelection(times: _times),
+            TimeSelection(
+              times: _times,
+              selectedIndex: _selectedTimeIndex,
+              onSelected: (index) => setState(() => _selectedTimeIndex = index),
+            ),
             const SizedBox(height: 24),
 
             _buildSectionTitle('Special Notes'),
@@ -148,7 +187,7 @@ class _BookAppointmentScreenState extends State<BookAppointmentScreen> {
 
             AuthSubmitButton(
               label: 'Confirm Booking',
-              isSubmitting: false,
+              isSubmitting: _isSubmitting,
               onPressed: _confirmBooking,
             ),
           ],

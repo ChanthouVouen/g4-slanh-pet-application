@@ -5,7 +5,6 @@ import 'package:slanh_pet_application/features/home/home_page.dart';
 import 'package:slanh_pet_application/firebase_options.dart';
 
 import 'features/flash_screen/flash_screen.dart';
-import 'features/home/home.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -32,7 +31,6 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
       ),
       home: const AuthGate(),
-      // home: HomeScreen(),
     );
   }
 }
