@@ -131,7 +131,7 @@ class _BookAppointmentScreenState extends State<BookAppointmentScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const SizedBox(height: 20),
+            const SizedBox(height: 40),
             const Positioned(top: 100, left: 16, child: CircleBackButton()),
             const SizedBox(height: 20),
 
