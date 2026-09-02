@@ -8,7 +8,7 @@ import 'package:slanh_pet_application/core/widgets/custom_gender_dropdown.dart';
 import 'package:slanh_pet_application/core/widgets/customer_text_field.dart';
 import 'package:slanh_pet_application/core/widgets/terms_checkbox.dart';
 import 'package:slanh_pet_application/features/auth/login/login.dart';
-import 'package:slanh_pet_application/features/home/home.dart';
+import 'package:slanh_pet_application/features/home/home_page.dart';
 import 'package:slanh_pet_application/core/widgets/password_text_field.dart';
 import 'package:slanh_pet_application/core/constants/register/register_string.dart';
 
@@ -108,7 +108,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
     if (result == 'success') {
       UiHelpers.showSnackBar(context, RegisterString.successMessage);
       Navigator.of(context).pushAndRemoveUntil(
-        MaterialPageRoute<void>(builder: (_) => const HomeScreen()),
+        MaterialPageRoute<void>(builder: (_) => const HomePage()),
         (_) => false,
       );
     } else {

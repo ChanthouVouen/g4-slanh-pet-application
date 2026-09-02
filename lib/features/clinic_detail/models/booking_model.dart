@@ -5,6 +5,7 @@ String formatPrice(double amount) => '\$${amount.toStringAsFixed(2)}';
 class BookingSummary {
   const BookingSummary({
     required this.clinicName,
+    required this.serviceName,
     required this.date,
     required this.time,
     required this.total,
@@ -14,12 +15,14 @@ class BookingSummary {
   /// Builds a summary with a freshly generated booking reference.
   factory BookingSummary.create({
     required String clinicName,
+    required String serviceName,
     required DateTime date,
     required String time,
     required double total,
   }) {
     return BookingSummary(
       clinicName: clinicName,
+      serviceName: serviceName,
       date: date,
       time: time,
       total: total,
@@ -28,6 +31,7 @@ class BookingSummary {
   }
 
   final String clinicName;
+  final String serviceName;
   final DateTime date;
   final String time;
   final double total;

@@ -1,20 +1,21 @@
 import 'package:flutter/widgets.dart';
 import 'package:slanh_pet_application/features/clinic_detail/widgets/comfirm_booking/time_chip.dart';
 
-class TimeSelection extends StatefulWidget {
-  const TimeSelection({super.key, required this._times});
+class TimeSelection extends StatelessWidget {
+  const TimeSelection({
+    super.key,
+    required this._times,
+    required this.selectedIndex,
+    required this.onSelected,
+  });
+
   final List<String> _times;
-
-  @override
-  State<TimeSelection> createState() => _TimeSelectionState();
-}
-
-class _TimeSelectionState extends State<TimeSelection> {
-  int _selectedTimeIndex = -1;
+  final int selectedIndex;
+  final ValueChanged<int> onSelected;
 
   @override
   Widget build(BuildContext context) {
-    final times = widget._times;
+    final times = _times;
 
     return GridView.builder(
       shrinkWrap: true,
@@ -29,8 +30,8 @@ class _TimeSelectionState extends State<TimeSelection> {
       itemBuilder: (context, index) {
         return TimeChip(
           time: times[index],
-          isSelected: _selectedTimeIndex == index,
-          onTap: () => setState(() => _selectedTimeIndex = index),
+          isSelected: selectedIndex == index,
+          onTap: () => onSelected(index),
         );
       },
     );

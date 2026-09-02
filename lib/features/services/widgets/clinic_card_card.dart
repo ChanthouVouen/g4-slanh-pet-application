@@ -49,7 +49,7 @@ class ClinicCard extends StatelessWidget {
                   ),
                   const SizedBox(width: 3),
                   Text(
-                    '4.5',
+                    "${service.rating}",
                     style: const TextStyle(
                       fontSize: 12.5,
                       fontWeight: FontWeight.w700,
@@ -71,7 +71,7 @@ class ClinicCard extends StatelessWidget {
                   ),
                   const Spacer(),
                   Text(
-                    '20\$',
+                    'Price: ${service.price}\$',
                     style: const TextStyle(
                       fontSize: 12.5,
                       fontWeight: FontWeight.w800,
