@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:slanh_pet_application/features/home/home.dart';
 import 'package:slanh_pet_application/features/services/service.dart';
+import 'package:slanh_pet_application/features/user_profile/profile.dart';
 
 Widget _buildHomeScreen(BuildContext context) => const HomeScreen();
 Widget _buildServiceScreen(BuildContext context) => const ServiceScreen();
+Widget _buildProfileScreen(BuildContext context) => const ProfileScreen();
 
 /// Screen builder for each bottom navigation tab index.
 ///
@@ -12,6 +14,7 @@ Widget _buildServiceScreen(BuildContext context) => const ServiceScreen();
 const Map<int, WidgetBuilder> kBottomNavScreenBuilders = {
   0: _buildHomeScreen,
   2: _buildServiceScreen,
+  4: _buildProfileScreen,
 };
 
 /// Switches to the tab at [index] by replacing the current screen.
