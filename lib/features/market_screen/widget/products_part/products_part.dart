@@ -1,5 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:slanh_pet_application/core/services/fireStore_service/firestore_service.dart';
+import 'package:slanh_pet_application/core/widgets/firestore_stream_builder.dart';
 import 'package:slanh_pet_application/features/home/widget_home/Popular_product_part/popular_productcard.dart';
 
 class ProductPart extends StatelessWidget {
@@ -19,22 +21,10 @@ class ProductPart extends StatelessWidget {
               SizedBox(height: 10),
 
               // PRODUCT GRID
-              StreamBuilder(
-                stream: FirebaseFirestore.instance
-                    .collection("products")
-                    .snapshots(),
-                builder: (context, snapshot) {
-                  if (snapshot.connectionState == ConnectionState.waiting) {
-                    return const Center(child: CircularProgressIndicator());
-                  }
-                  if (snapshot.hasError) {
-                    return Center(child: Text('Error: ${snapshot.error}'));
-                  }
-                  if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
-                    return const Center(child: Text('No products found'));
-                  }
-                  final products = snapshot.data!.docs;
+              FirestoreStreamBuilder(
+                stream: FirestoreService().getCollection("products"),
 
+                builder: (products) {
                   return GridView.builder(
                     shrinkWrap: true,
                     physics: const NeverScrollableScrollPhysics(),

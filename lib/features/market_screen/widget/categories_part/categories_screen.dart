@@ -14,10 +14,9 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
   final List<String> categories = [
     "All",
     "Food",
-    "Grooming",
     "Toys",
     "Accessories",
-    "Health",
+    "Pets",
   ];
 
   @override

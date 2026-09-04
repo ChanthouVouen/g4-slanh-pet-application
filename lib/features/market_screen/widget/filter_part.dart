@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:slanh_pet_application/core/services/fireStore_service/firestore_service.dart';
+import 'package:slanh_pet_application/core/widgets/firestore_stream_builder.dart';
 import 'package:slanh_pet_application/features/market_screen/widget/filter_screen/filter_sort_screen.dart';
 
 class FilterPart extends StatelessWidget {
@@ -12,11 +14,19 @@ class FilterPart extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Container(
-            child: Text(
-              "847 Products",
-              style: TextStyle(color: const Color.fromARGB(255, 145, 145, 145)),
-            ),
+          FirestoreStreamBuilder(
+            stream: FirestoreService().getCollection('products'),
+            builder: (products) {
+              final productCounts = products.length;
+              return Container(
+                child: Text(
+                  "$productCounts products",
+                  style: TextStyle(
+                    color: const Color.fromARGB(255, 145, 145, 145),
+                  ),
+                ),
+              );
+            },
           ),
           Container(
             height: 25,

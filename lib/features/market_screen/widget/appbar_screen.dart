@@ -13,6 +13,7 @@ class AppBarScreen extends StatelessWidget {
       height: 80,
       // color: Colors.blueAccent,
       child: Row(
+        crossAxisAlignment: CrossAxisAlignment.end,
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Container(

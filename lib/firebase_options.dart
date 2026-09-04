@@ -10,6 +10,9 @@ class DefaultFirebaseOptions {
     switch (defaultTargetPlatform) {
       case TargetPlatform.android:
         return android;
+
+      case TargetPlatform.iOS:
+        return ios;
       default:
         throw UnsupportedError(
           'DefaultFirebaseOptions are not supported for this platform.',
@@ -34,6 +37,15 @@ class DefaultFirebaseOptions {
     appId: '1:899562761334:android:b8adcf2cc394ce3501c357',
     messagingSenderId: '899562761334',
     projectId: 'slanh-pets-app',
+    storageBucket: 'slanh-pets-app.firebasestorage.app',
+  );
+
+  static const FirebaseOptions ios = FirebaseOptions(
+    apiKey: 'AIzaSyCxa7sSqwWafV1HQda0O08ABi-F4fh0ccA',
+    appId: '1:899562761334:ios:61f51e80b3af8aae01c357',
+    messagingSenderId: '899562761334',
+    projectId: 'slanh-pets-app',
+    iosBundleId: 'com.example.slanhPetApplication',
     storageBucket: 'slanh-pets-app.firebasestorage.app',
   );
 }

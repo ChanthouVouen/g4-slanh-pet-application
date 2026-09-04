@@ -17,9 +17,7 @@ class FilterSortScreen extends StatefulWidget {
 }
 
 class _FilterSortScreenState extends State<FilterSortScreen> {
-  // =========================
   // COLORS
-  // =========================
 
   final Color orange = const Color(0xFFFF633D);
   final Color darkText = const Color(0xFF19182B);
@@ -58,29 +56,23 @@ class _FilterSortScreenState extends State<FilterSortScreen> {
     "Others",
   ];
 
-  // =========================
   // PRICE
-  // =========================
 
   RangeValues priceRange = const RangeValues(0, 328);
 
-  // =========================
+
   // RATING
-  // =========================
+ 
 
   String selectedRating = "4.5+";
 
   final List<String> ratings = ["4.5+", "4.0+", "3.5+", "Any"];
 
-  // =========================
   // DISTANCE
-  // =========================
 
   double distance = 5;
 
-  // =========================
   // FEATURES
-  // =========================
 
   final List<String> features = [
     "Free Delivery",
