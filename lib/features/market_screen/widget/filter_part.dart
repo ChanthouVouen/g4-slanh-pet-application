@@ -4,7 +4,8 @@ import 'package:slanh_pet_application/core/widgets/firestore_stream_builder.dart
 import 'package:slanh_pet_application/features/market_screen/widget/filter_screen/filter_sort_screen.dart';
 
 class FilterPart extends StatelessWidget {
-  const FilterPart({super.key});
+  final String selectedCategory;
+  const FilterPart({super.key, required this.selectedCategory});
 
   @override
   Widget build(BuildContext context) {
@@ -15,7 +16,7 @@ class FilterPart extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           FirestoreStreamBuilder(
-            stream: FirestoreService().getCollection('products'),
+            stream: FirestoreService().getProductsByType(selectedCategory),
             builder: (products) {
               final productCounts = products.length;
               return Container(

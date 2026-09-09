@@ -11,4 +11,24 @@ class FirestoreService {
         .snapshots()
         .map((snapshot) => snapshot.docs);
   }
+
+  // Get products by type
+  Stream<List<QueryDocumentSnapshot<Map<String, dynamic>>>> getProductsByType(
+    String type,
+  ) {
+    return _firestore.collection('products').snapshots().map((snapshot) {
+      if (type.trim().toLowerCase() == 'all') {
+        return snapshot.docs;
+      }
+      final selectedType = type.trim().toLowerCase();
+
+      return snapshot.docs.where((product) {
+        final data = product.data();
+
+        final productType = data['type']?.toString().trim().toLowerCase();
+
+        return productType == selectedType;
+      }).toList();
+    });
+  }
 }

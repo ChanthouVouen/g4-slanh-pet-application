@@ -1,20 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:slanh_pet_application/features/market_screen/widget/categories_part/categories_detail.dart';
 
-class CategoriesScreen extends StatefulWidget {
-  const CategoriesScreen({super.key});
+class CategoriesScreen extends StatelessWidget {
+  final String selectedCategory;
+  final ValueChanged<String> onCategorySelected;
 
-  @override
-  State<CategoriesScreen> createState() => _CategoriesScreenState();
-}
+  const CategoriesScreen({
+    super.key,
+    required this.selectedCategory,
+    required this.onCategorySelected,
+  });
 
-class _CategoriesScreenState extends State<CategoriesScreen> {
-  String selectedCategory = "All";
-
-  final List<String> categories = [
+  final List<String> categories = const [
     "All",
     "Food",
-    "Toys",
+    "Toy",
     "Accessories",
     "Pets",
   ];
@@ -31,14 +31,12 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
             return CategoriesDetail(
               name: category,
 
-              // Is this category selected?
+              // Check which category is selected
               isSelected: selectedCategory == category,
 
-              // When user taps
+              // Tell parent which category was clicked
               onTap: () {
-                setState(() {
-                  selectedCategory = category;
-                });
+                onCategorySelected(category);
               },
             );
           }).toList(),

@@ -6,33 +6,54 @@ import 'package:slanh_pet_application/features/market_screen/widget/categories_p
 import 'package:slanh_pet_application/features/market_screen/widget/filter_part.dart';
 import 'package:slanh_pet_application/features/market_screen/widget/products_part/products_part.dart';
 
-class MarketScreen extends StatelessWidget {
+class MarketScreen extends StatefulWidget {
   const MarketScreen({super.key});
-  static const int _tabIndex = 1;
+
+  static const int tabIndex = 1;
+
+  @override
+  State<MarketScreen> createState() => _MarketScreenState();
+}
+
+class _MarketScreenState extends State<MarketScreen> {
+  String selectedCategory = "All";
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Column(
         children: [
-          SizedBox(height: 10),
+          const SizedBox(height: 10),
 
-          AppBarScreen(),
+          const AppBarScreen(),
 
-          CategoriesScreen(),
+          // CATEGORY
+          CategoriesScreen(
+            selectedCategory: selectedCategory,
+            onCategorySelected: (category) {
+              setState(() {
+                selectedCategory = category;
+              });
+            },
+          ),
 
-          FilterPart(),
+          FilterPart(selectedCategory: selectedCategory),
 
-          SizedBox(height: 10),
+          const SizedBox(height: 10),
 
-          ProductPart(),
+          // PRODUCTS
+          ProductPart(selectedCategory: selectedCategory),
         ],
       ),
 
       bottomNavigationBar: CustomBottomNavBar(
-        currentIndex: _tabIndex,
+        currentIndex: MarketScreen.tabIndex,
         onTap: (index) {
-          switchBottomNavTab(context, currentIndex: _tabIndex, index: index);
+          switchBottomNavTab(
+            context,
+            currentIndex: MarketScreen.tabIndex,
+            index: index,
+          );
         },
       ),
     );
