@@ -32,7 +32,9 @@ class ProductTabBar extends StatelessWidget {
                   duration: const Duration(milliseconds: 180),
                   padding: const EdgeInsets.symmetric(vertical: 10),
                   decoration: BoxDecoration(
-                    color: i == selectedIndex ? Colors.white : Colors.transparent,
+                    color: i == selectedIndex
+                        ? Colors.white
+                        : Colors.transparent,
                     borderRadius: BorderRadius.circular(11),
                     boxShadow: i == selectedIndex
                         ? [

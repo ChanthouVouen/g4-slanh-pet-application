@@ -1,6 +1,9 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 
 import '../../map_screen/widgets/round_icon_button.dart';
+import 'banner_page.dart';
 
 /// Top image banner with a paw-print pattern background, back/favorite
 /// buttons and a paged dot indicator.
@@ -27,9 +30,38 @@ class ProductImageCarousel extends StatefulWidget {
 class _ProductImageCarouselState extends State<ProductImageCarousel> {
   final PageController _controller = PageController();
   int _page = 0;
+  Timer? _autoScrollTimer;
+
+  @override
+  void initState() {
+    super.initState();
+    _startAutoScroll();
+  }
+
+  void _startAutoScroll() {
+    final pageCount = widget.images.isEmpty ? 1 : widget.images.length;
+    if (pageCount <= 1) return;
+
+    _autoScrollTimer = Timer.periodic(const Duration(seconds: 3), (_) {
+      if (!_controller.hasClients) return;
+
+      final currentPage = _controller.page!.round();
+
+      if (currentPage == pageCount - 1) {
+        _controller.jumpToPage(0);
+        return;
+      }
+
+      _controller.nextPage(
+        duration: const Duration(milliseconds: 500),
+        curve: Curves.easeInOut,
+      );
+    });
+  }
 
   @override
   void dispose() {
+    _autoScrollTimer?.cancel();
     _controller.dispose();
     super.dispose();
   }
@@ -47,15 +79,20 @@ class _ProductImageCarouselState extends State<ProductImageCarousel> {
             controller: _controller,
             itemCount: pageCount,
             onPageChanged: (index) => setState(() => _page = index),
-            itemBuilder: (context, index) => _BannerPage(
+            itemBuilder: (context, index) => BannerPage(
               colors: widget.colors,
-              imageUrl: index < widget.images.length ? widget.images[index] : '',
+              imageUrl: index < widget.images.length
+                  ? widget.images[index]
+                  : '',
             ),
           ),
           Positioned(
             top: 12,
             left: 16,
-            child: RoundIconButton(icon: Icons.arrow_back, onTap: widget.onBack),
+            child: RoundIconButton(
+              icon: Icons.arrow_back,
+              onTap: widget.onBack,
+            ),
           ),
           Positioned(
             top: 12,
@@ -92,91 +129,4 @@ class _ProductImageCarouselState extends State<ProductImageCarousel> {
       ),
     );
   }
-}
-
-class _BannerPage extends StatelessWidget {
-  const _BannerPage({required this.colors, required this.imageUrl});
-
-  final List<Color> colors;
-  final String imageUrl;
-
-  @override
-  Widget build(BuildContext context) {
-    if (imageUrl.isEmpty) return _Placeholder(colors: colors);
-
-    return Image.network(
-      imageUrl,
-      fit: BoxFit.cover,
-      width: double.infinity,
-      height: double.infinity,
-      loadingBuilder: (context, child, progress) {
-        if (progress == null) return child;
-        return Stack(
-          fit: StackFit.expand,
-          children: [
-            _Placeholder(colors: colors),
-            const Center(
-              child: CircularProgressIndicator(color: Colors.white),
-            ),
-          ],
-        );
-      },
-      errorBuilder: (context, error, stackTrace) =>
-          _Placeholder(colors: colors),
-    );
-  }
-}
-
-class _Placeholder extends StatelessWidget {
-  const _Placeholder({required this.colors});
-
-  final List<Color> colors;
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        gradient: LinearGradient(
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
-          colors: colors,
-        ),
-      ),
-      child: ClipRect(
-        child: Stack(
-          children: [
-            for (final spot in _iconSpots)
-              Positioned(
-                left: spot.dx,
-                top: spot.dy,
-                child: Transform.rotate(
-                  angle: spot.dx % 2 == 0 ? -0.3 : 0.3,
-                  child: Icon(
-                    Icons.cookie_outlined,
-                    size: 46,
-                    color: Colors.white.withValues(alpha: 0.45),
-                  ),
-                ),
-              ),
-            Center(
-              child: Icon(
-                Icons.pets,
-                size: 96,
-                color: Colors.white.withValues(alpha: 0.85),
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-
-  static const _iconSpots = [
-    Offset(20, 30),
-    Offset(280, 40),
-    Offset(60, 220),
-    Offset(320, 200),
-    Offset(160, 20),
-    Offset(10, 130),
-  ];
 }

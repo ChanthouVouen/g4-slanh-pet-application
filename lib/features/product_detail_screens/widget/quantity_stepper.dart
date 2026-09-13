@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:slanh_pet_application/core/constants/app_colors.dart';
 
+import 'stepper_button.dart';
+
 /// Minus / count / plus stepper used to pick the order quantity.
 class QuantityStepper extends StatelessWidget {
   const QuantityStepper({
@@ -25,7 +27,7 @@ class QuantityStepper extends StatelessWidget {
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
-          _StepperButton(icon: Icons.remove, onTap: onDecrement),
+          StepperButton(icon: Icons.remove, onTap: onDecrement),
           SizedBox(
             width: 28,
             child: Text(
@@ -34,45 +36,8 @@ class QuantityStepper extends StatelessWidget {
               style: const TextStyle(fontSize: 15, fontWeight: FontWeight.w700),
             ),
           ),
-          _StepperButton(
-            icon: Icons.add,
-            onTap: onIncrement,
-            filled: true,
-          ),
+          StepperButton(icon: Icons.add, onTap: onIncrement, filled: true),
         ],
-      ),
-    );
-  }
-}
-
-class _StepperButton extends StatelessWidget {
-  const _StepperButton({
-    required this.icon,
-    required this.onTap,
-    this.filled = false,
-  });
-
-  final IconData icon;
-  final VoidCallback onTap;
-  final bool filled;
-
-  @override
-  Widget build(BuildContext context) {
-    return Material(
-      color: filled ? AppColors.orange : Colors.white,
-      shape: const CircleBorder(),
-      child: InkWell(
-        customBorder: const CircleBorder(),
-        onTap: onTap,
-        child: SizedBox(
-          width: 30,
-          height: 30,
-          child: Icon(
-            icon,
-            size: 16,
-            color: filled ? Colors.white : AppColors.black,
-          ),
-        ),
       ),
     );
   }

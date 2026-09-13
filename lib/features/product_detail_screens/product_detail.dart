@@ -22,6 +22,13 @@ class ProductDetailScreen extends StatefulWidget {
 class _ProductDetailScreenState extends State<ProductDetailScreen> {
   final _productService = ProductService();
 
+  /// Built once, not inside build(): a future created during build would be
+  /// re-issued on every setState, so changing the quantity or the tab would
+  /// re-read the product and flash the loading spinner.
+  late final Future<Product?> _productFuture = _productService.getProduct(
+    widget.productId,
+  );
+
   int _quantity = 1;
   int _selectedTab = 0;
   bool _isFavorite = false;
@@ -47,7 +54,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
         top: false,
         bottom: false,
         child: FutureBuilder<Product?>(
-          future: _productService.getProduct(widget.productId),
+          future: _productFuture,
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
               return const Center(child: CircularProgressIndicator());
@@ -79,8 +86,6 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                       setState(() => _selectedTab = index),
                   onIncrementQuantity: _incrementQuantity,
                   onDecrementQuantity: _decrementQuantity,
-                  onStoreTap: () =>
-                      _showComingSoon('Store page coming soon.'),
                   onAddToCart: () => _showComingSoon(
                     'Added $_quantity × ${product.name} to cart.',
                   ),

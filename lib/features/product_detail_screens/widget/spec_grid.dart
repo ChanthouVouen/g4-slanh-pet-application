@@ -3,7 +3,7 @@ import 'package:slanh_pet_application/core/constants/app_colors.dart';
 
 import '../models/product_models.dart';
 
-/// A two-column grid of label/value chips, used for details and nutrition.
+
 class SpecGrid extends StatelessWidget {
   const SpecGrid({super.key, required this.specs});
 
@@ -44,7 +44,10 @@ class SpecGrid extends StatelessWidget {
               const SizedBox(height: 3),
               Text(
                 spec.value,
-                style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w700),
+                style: const TextStyle(
+                  fontSize: 14,
+                  fontWeight: FontWeight.w700,
+                ),
               ),
             ],
           ),
