@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:slanh_pet_application/features/home/widget_home/Popular_product_part/popular_productcard.dart';
+import 'package:slanh_pet_application/features/product_detail_screens/product_detail.dart';
 import 'package:slanh_pet_application/features/services/service.dart';
 
 class PopularProductPart extends StatelessWidget {
@@ -97,18 +98,28 @@ class PopularProductPart extends StatelessWidget {
                   childAspectRatio: 0.72,
                 ),
 
-                itemCount: 4,
+                // Show at most 4, but never more than we actually have.
+                itemCount: products.length < 4 ? products.length : 4,
 
                 itemBuilder: (context, index) {
                   final product = products[index];
 
                   final data = product.data();
 
-                  return PopularProductCard(
-                    image: data['image'] ?? "",
-                    name: data['name'] ?? "no Name",
-                    rating: (data['rating'] as num?)?.toDouble() ?? 0.0,
-                    price: (data['price'] as num?)?.toDouble() ?? 0.0,
+                  return GestureDetector(
+                    onTap: () => Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) =>
+                            ProductDetailScreen(productId: product.id),
+                      ),
+                    ),
+                    child: PopularProductCard(
+                      image: data['image'] ?? "",
+                      name: data['name'] ?? "no Name",
+                      rating: (data['rating'] as num?)?.toDouble() ?? 0.0,
+                      price: (data['price'] as num?)?.toDouble() ?? 0.0,
+                    ),
                   );
                 },
               );
@@ -119,10 +130,3 @@ class PopularProductPart extends StatelessWidget {
     );
   }
 }
-
-// final products = [
-//   {'image': 'assets/images/dog1.jpg', 'title': 'Dog', 'price': 90.0},
-//   {'image': 'assets/images/bird1.jpg', 'title': 'Bird', 'price': 40.0},
-//   {'image': 'assets/images/cat1.jpg', 'title': 'Cat', 'price': 60.0},
-//   {'image': 'assets/images/dog2.jpg', 'title': 'Dog', 'price': 80.0},
-// ];
