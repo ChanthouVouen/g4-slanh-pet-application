@@ -22,13 +22,13 @@ class _SearchingPageState extends State<SearchingPage> {
     "Cat food",
     "Dog grooming",
     "Hamster cage",
-    "Neou Sokheng",
+    "Orn ChanVeasna",
     "Worldwide Handsome",
     "No cap",
   ];
 
   final List<String> trendingSearches = [
-    "🔥 Royal Caniniodjoijweiwjeiojweoi jeivisjo ivjoiv j",
+    "🔥 Royal Canin",
     "🐕 Shih Tzu puppy",
     "✂️ Grooming near me",
     "💊 Pet vitamins",

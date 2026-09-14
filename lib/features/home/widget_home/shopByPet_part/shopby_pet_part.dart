@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 // import 'package:slanh_pet_application/features/home/widget_home/QuickService_part/contents_quickservices.dart';
 import 'package:slanh_pet_application/features/home/widget_home/shopByPet_part/contents_shopby_part.dart';
+import 'package:slanh_pet_application/features/market_screen/market_screen.dart';
 import 'package:slanh_pet_application/features/services/service.dart';
 
 class ShopbyPetPart extends StatelessWidget {
@@ -18,7 +19,7 @@ class ShopbyPetPart extends StatelessWidget {
       child: Column(
         children: [
           Container(
-            padding: EdgeInsets.only(left: 20, right: 20, top: 20),
+            padding: EdgeInsets.only(left: 20, right: 20, top: 10),
 
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -31,7 +32,7 @@ class ShopbyPetPart extends StatelessWidget {
                   onTap: () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => ServiceScreen()),
+                      MaterialPageRoute(builder: (context) => MarketScreen()),
                     );
                   },
 

@@ -1,0 +1,41 @@
+{
+  "flutter": {
+    "platforms": {
+      "android": {
+        "default": {
+          "projectId": "slanh-pets-app",
+          "appId": "1:899562761334:android:b8adcf2cc394ce3501c357",
+          "fileOutput": "android/app/google-services.json"
+        }
+      },
+      "ios": {
+        "default": {
+          "projectId": "slanh-pets-app",
+          "appId": "1:899562761334:ios:61f51e80b3af8aae01c357",
+          "uploadDebugSymbols": false,
+          "fileOutput": "ios/Runner/GoogleService-Info.plist"
+        }
+      },
+      "macos": {
+        "default": {
+          "projectId": "slanh-pets-app",
+          "appId": "1:899562761334:ios:61f51e80b3af8aae01c357",
+          "uploadDebugSymbols": false,
+          "fileOutput": "macos/Runner/GoogleService-Info.plist"
+        }
+      },
+      "dart": {
+        "lib/firebase_options.dart": {
+          "projectId": "slanh-pets-app",
+          "configurations": {
+            "android": "1:899562761334:android:b8adcf2cc394ce3501c357",
+            "ios": "1:899562761334:ios:61f51e80b3af8aae01c357",
+            "macos": "1:899562761334:ios:61f51e80b3af8aae01c357",
+            "web": "1:899562761334:web:18a93c5a557c9c4101c357",
+            "windows": "1:899562761334:web:18a93c5a557c9c4101c357"
+          }
+        }
+      }
+    }
+  }
+}
