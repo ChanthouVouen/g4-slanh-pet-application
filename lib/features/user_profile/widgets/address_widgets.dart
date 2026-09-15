@@ -129,7 +129,7 @@ class _AddressFormScreenState extends State<AddressFormScreen> {
               style: FilledButton.styleFrom(
                 backgroundColor: const Color(0xFFFF6338),
                 shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(18),
+                  borderRadius: BorderRadius.circular(10),
                 ),
               ),
               child: Text(
@@ -222,11 +222,11 @@ class AddressInput extends StatelessWidget {
                 fillColor: const Color(0xFFF3EEEB),
                 contentPadding: const EdgeInsets.symmetric(horizontal: 18),
                 border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(18),
+                  borderRadius: BorderRadius.circular(10),
                   borderSide: BorderSide.none,
                 ),
                 focusedBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(18),
+                  borderRadius: BorderRadius.circular(10),
                   borderSide: const BorderSide(
                     color: Color(0xFFFF6338),
                     width: 1.2,

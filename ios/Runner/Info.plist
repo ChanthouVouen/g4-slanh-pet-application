@@ -26,6 +26,10 @@
 	<string>$(FLUTTER_BUILD_NUMBER)</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
+	<key>NSCameraUsageDescription</key>
+	<string>take a selfie for your profile photo.</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>choose a profile photo.</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>Slanh Pet uses your location to show nearby pet services and directions.</string>
 	<key>UIApplicationSceneManifest</key>

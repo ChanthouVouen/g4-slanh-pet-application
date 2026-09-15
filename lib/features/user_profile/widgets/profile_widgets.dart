@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../models/profile_model.dart';
+import 'profile_image.dart';
 
 class ProfileHero extends StatelessWidget {
   const ProfileHero({super.key, required this.profile, required this.onEdit});
@@ -76,9 +77,7 @@ class ProfileHeader extends StatelessWidget {
               CircleAvatar(
                 radius: 48,
                 backgroundColor: Colors.white,
-                backgroundImage: profile.photoUrl?.isNotEmpty == true
-                    ? NetworkImage(profile.photoUrl!)
-                    : null,
+                backgroundImage: profileImageProvider(profile.photoUrl),
                 child: profile.photoUrl?.isNotEmpty == true
                     ? null
                     : Text(

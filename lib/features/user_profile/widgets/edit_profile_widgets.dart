@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import '../models/profile_model.dart';
+import 'profile_image.dart';
 
 class ProfilePhotoEditor extends StatefulWidget {
   const ProfilePhotoEditor({
@@ -28,10 +29,10 @@ class _ProfilePhotoEditorState extends State<ProfilePhotoEditor> {
           clipBehavior: Clip.none,
           children: [
             SizedBox(
-              width: 118,
-              height: 94,
+              width: 170,
+              height: 170,
               child: ClipRRect(
-                borderRadius: BorderRadius.circular(3),
+                borderRadius: BorderRadius.circular(100),
                 child: _selectedImage != null
                     ? FutureBuilder(
                         future: _selectedImage!.readAsBytes(),
@@ -48,7 +49,7 @@ class _ProfilePhotoEditorState extends State<ProfilePhotoEditor> {
                         },
                       )
                     : widget.profile.photoUrl?.isNotEmpty == true
-                    ? Image.network(widget.profile.photoUrl!, fit: BoxFit.cover)
+                    ? profileImageWidget(widget.profile.photoUrl)
                     : ColoredBox(
                         color: const Color(0xFFFFE0D3),
                         child: Center(
@@ -92,10 +93,35 @@ class _ProfilePhotoEditorState extends State<ProfilePhotoEditor> {
   }
 
   Future<void> _pickPhoto(BuildContext context) async {
+    final source = await showModalBottomSheet<ImageSource>(
+      context: context,
+      showDragHandle: true,
+      builder: (sheetContext) => SafeArea(
+        child: Wrap(
+          children: [
+            ListTile(
+              leading: const Icon(Icons.photo_camera_outlined),
+              title: const Text('Take a selfie'),
+              subtitle: const Text('Use the front camera'),
+              onTap: () => Navigator.pop(sheetContext, ImageSource.camera),
+            ),
+            ListTile(
+              leading: const Icon(Icons.photo_library_outlined),
+              title: const Text('Choose from gallery'),
+              onTap: () => Navigator.pop(sheetContext, ImageSource.gallery),
+            ),
+          ],
+        ),
+      ),
+    );
+    if (source == null) return;
+
     try {
       final image = await ImagePicker().pickImage(
-        source: ImageSource.gallery,
+        source: source,
         imageQuality: 85,
+        maxWidth: 6000,
+        maxHeight:6000
       );
       if (image == null) return;
       setState(() {
@@ -163,7 +189,7 @@ class ProfileField extends StatelessWidget {
                 vertical: 17,
               ),
               border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(20),
+                borderRadius: BorderRadius.circular(10),
                 borderSide: BorderSide.none,
               ),
             ),
@@ -192,21 +218,25 @@ class ProfileGenderField extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const Text('Gender', style: TextStyle(fontWeight: FontWeight.w600)),
-          const SizedBox(height: 7),
+          const SizedBox(height: 2),
+          const SizedBox(width: 7),
           DropdownButtonFormField<String>(
-            value: value,
+            //value: value,
             onChanged: onChanged,
+            
             decoration: InputDecoration(
               hintText: 'Select gender',
               filled: true,
               fillColor: const Color(0xFFF3EEEB),
               contentPadding: const EdgeInsets.symmetric(horizontal: 18),
               border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(20),
+                borderRadius: BorderRadius.circular(10),
                 borderSide: BorderSide.none,
               ),
             ),
+            
             items: const [
+
               DropdownMenuItem(value: 'Male', child: Text('Male')),
               DropdownMenuItem(value: 'Female', child: Text('Female')),
               DropdownMenuItem(value: 'Other', child: Text('Other')),
