@@ -27,8 +27,8 @@ class FirestoreStreamBuilder<T> extends StatelessWidget {
         }
 
         // 3. No data
-        if (snapshot.data is List && (snapshot.data as List).isEmpty) {
-          return const Center(child: Text('No items found'));
+        if (!snapshot.hasData) {
+          return const SizedBox();
         }
 
         // 4. Data exists
