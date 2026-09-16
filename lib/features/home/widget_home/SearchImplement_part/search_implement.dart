@@ -1,10 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:slanh_pet_application/features/cart/cart_screen.dart';
-import 'package:slanh_pet_application/features/cart/cart_store.dart';
 import 'package:slanh_pet_application/features/home/widget_home/SearchImplement_part/searching_page.dart';
-import 'package:slanh_pet_application/features/home/widget_home/data_users/user_name.dart';
-
-// import 'package:slanh_pet_application/main.dart';
 
 class SearchImplement extends StatelessWidget {
   const SearchImplement({super.key});
@@ -13,66 +8,10 @@ class SearchImplement extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
-      height: 205,
       color: const Color(0xFFF77F5A),
+      padding: const EdgeInsets.only(top: 16),
       child: Column(
         children: [
-          const SizedBox(height: 28),
-          Container(
-            margin: const EdgeInsets.symmetric(horizontal: 18),
-            padding: const EdgeInsets.symmetric(horizontal: 6),
-
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-
-              children: [
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      "Welcome Back🙏🏻",
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-
-                    UserName(),
-                  ],
-                ),
-                Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    _HeaderActionButton(
-                      icon: Icons.chat_bubble_outline,
-                      onTap: () {},
-                    ),
-                    const SizedBox(width: 8),
-                    _HeaderActionButton(
-                      icon: Icons.notifications_none,
-                      onTap: () {},
-                    ),
-                    const SizedBox(width: 8),
-                    ValueListenableBuilder<List<CartProduct>>(
-                      valueListenable: CartStore.instance.itemsNotifier,
-                      builder: (context, items, _) {
-                        return _HeaderActionButton(
-                          icon: Icons.shopping_cart_outlined,
-                          badge: CartStore.instance.itemCount,
-                          onTap: () => Navigator.of(context).push(
-                            MaterialPageRoute(
-                              builder: (_) => const CartScreen(),
-                            ),
-                          ),
-                        );
-                      },
-                    ),
-                  ],
-                ),
-              ],
-            ),
-          ),
-
           GestureDetector(
             onTap: () {
               Navigator.push(
@@ -108,7 +47,7 @@ class SearchImplement extends StatelessWidget {
           ),
 
           Container(
-            padding: const EdgeInsets.symmetric(horizontal: 20),
+            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -141,8 +80,10 @@ class SearchImplement extends StatelessWidget {
   }
 }
 
-class _HeaderActionButton extends StatelessWidget {
-  const _HeaderActionButton({
+/// Small circular button used in the Home app bar (e.g. the cart action).
+class HeaderActionButton extends StatelessWidget {
+  const HeaderActionButton({
+    super.key,
     required this.icon,
     required this.onTap,
     this.badge = 0,

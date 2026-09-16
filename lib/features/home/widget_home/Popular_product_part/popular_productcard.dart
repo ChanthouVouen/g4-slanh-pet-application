@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:slanh_pet_application/core/utility/ui_helper.dart';
+import 'package:slanh_pet_application/features/user_profile/models/wishlist_model.dart';
+import 'package:slanh_pet_application/features/user_profile/wishlist_store.dart';
 
 class PopularProductCard extends StatefulWidget {
   final String image;
@@ -8,6 +10,10 @@ class PopularProductCard extends StatefulWidget {
   final double price;
   final VoidCallback? onAddToCart;
 
+  /// When set, the top-right button removes the item (e.g. from a
+  /// wishlist) instead of toggling favorite.
+  final VoidCallback? onRemove;
+
   const PopularProductCard({
     super.key,
     required this.image,
@@ -15,6 +21,7 @@ class PopularProductCard extends StatefulWidget {
     required this.rating,
     required this.price,
     this.onAddToCart,
+    this.onRemove,
   });
 
   @override
@@ -22,10 +29,36 @@ class PopularProductCard extends StatefulWidget {
 }
 
 class _PopularProductCardState extends State<PopularProductCard> {
-  bool isFavorite = false;
+  /// Wishlist toggling only applies to plain product cards; a card already
+  /// showing an [onRemove] button (e.g. inside the Wishlist screen itself)
+  /// doesn't need its own favorite state.
+  bool get _isWishlistable => widget.onRemove == null;
+
+  void _toggleWishlist() {
+    WishlistStore.instance.toggle(
+      WishlistModel(
+        name: widget.name,
+        price: widget.price,
+        imageUrl: widget.image,
+        rating: widget.rating,
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
+    if (_isWishlistable) {
+      return ValueListenableBuilder<List<WishlistModel>>(
+        valueListenable: WishlistStore.instance.itemsNotifier,
+        builder: (context, _, _) => _buildCard(
+          isFavorite: WishlistStore.instance.isWishlisted(widget.name),
+        ),
+      );
+    }
+    return _buildCard(isFavorite: false);
+  }
+
+  Widget _buildCard({required bool isFavorite}) {
     return Container(
       decoration: BoxDecoration(
         color: Colors.white,
@@ -93,9 +126,11 @@ class _PopularProductCardState extends State<PopularProductCard> {
 
                   child: GestureDetector(
                     onTap: () {
-                      setState(() {
-                        isFavorite = !isFavorite;
-                      });
+                      if (widget.onRemove != null) {
+                        widget.onRemove!();
+                        return;
+                      }
+                      _toggleWishlist();
                     },
 
                     child: Container(
@@ -107,13 +142,19 @@ class _PopularProductCardState extends State<PopularProductCard> {
                         shape: BoxShape.circle,
                       ),
 
-                      child: Icon(
-                        isFavorite ? Icons.favorite : Icons.favorite_border,
-
-                        color: isFavorite ? Colors.red : Colors.black54,
-
-                        size: 24,
-                      ),
+                      child: widget.onRemove != null
+                          ? const Icon(
+                              Icons.close,
+                              color: Colors.black54,
+                              size: 20,
+                            )
+                          : Icon(
+                              isFavorite
+                                  ? Icons.favorite
+                                  : Icons.favorite_border,
+                              color: isFavorite ? Colors.red : Colors.black54,
+                              size: 24,
+                            ),
                     ),
                   ),
                 ),
