@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:slanh_pet_application/core/services/fireStore_service/firestore_service.dart';
 import 'package:slanh_pet_application/core/widgets/firestore_stream_builder.dart';
 import 'package:slanh_pet_application/features/home/widget_home/Popular_product_part/popular_productcard.dart';
+import 'package:slanh_pet_application/features/product_detail_screens/product_detail.dart';
 
 class SearchResultScreen extends StatefulWidget {
   final String searchQuery;
@@ -156,12 +157,22 @@ class _SearchResultScreenState extends State<SearchResultScreen> {
                         itemBuilder: (context, index) {
                           final product = products[index];
                           final data = product.data();
+                          return GestureDetector(
+                            onTap: () => Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) =>
+                                    ProductDetailScreen(productId: product.id),
+                              ),
+                            ),
 
-                          return PopularProductCard(
-                            image: data['image'] ?? '',
-                            name: data['name'] ?? 'No Name',
-                            rating: (data['rating'] as num?)?.toDouble() ?? 0.0,
-                            price: (data['price'] as num?)?.toDouble() ?? 0.0,
+                            child: PopularProductCard(
+                              image: data['image'] ?? '',
+                              name: data['name'] ?? 'No Name',
+                              rating:
+                                  (data['rating'] as num?)?.toDouble() ?? 0.0,
+                              price: (data['price'] as num?)?.toDouble() ?? 0.0,
+                            ),
                           );
                         },
                       );
