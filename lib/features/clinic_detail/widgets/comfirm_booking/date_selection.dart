@@ -2,28 +2,29 @@ import 'package:flutter/widgets.dart';
 import 'package:slanh_pet_application/features/clinic_detail/models/booking_model.dart';
 import 'package:slanh_pet_application/features/clinic_detail/widgets/comfirm_booking/date_tile.dart';
 
-class DateSelection extends StatefulWidget {
-  const DateSelection({super.key, required this.dates});
+class DateSelection extends StatelessWidget {
+  const DateSelection({
+    super.key,
+    required this.dates,
+    required this.selectedIndex,
+    required this.onSelected,
+  });
+
   final List<DateOptionModel> dates;
-
-  @override
-  State<DateSelection> createState() => _DateSelectionState();
-}
-
-class _DateSelectionState extends State<DateSelection> {
-  int _selectedDateIndex = 0;
+  final int selectedIndex;
+  final ValueChanged<int> onSelected;
 
   @override
   Widget build(BuildContext context) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        for (var index = 0; index < widget.dates.length; index++)
+        for (var index = 0; index < dates.length; index++)
           DateTile(
-            dayName: widget.dates[index].dayName,
-            dayNumber: widget.dates[index].dayNumber,
-            isSelected: _selectedDateIndex == index,
-            onTap: () => setState(() => _selectedDateIndex = index),
+            dayName: dates[index].dayName,
+            dayNumber: dates[index].dayNumber,
+            isSelected: selectedIndex == index,
+            onTap: () => onSelected(index),
           ),
       ],
     );

@@ -1,21 +1,15 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:slanh_pet_application/features/home/home_page.dart';
 import 'package:slanh_pet_application/firebase_options.dart';
 
 import 'features/flash_screen/flash_screen.dart';
-import 'features/home/home.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  try {
-    await Firebase.initializeApp(
-      options: DefaultFirebaseOptions.currentPlatform,
-    );
-  } catch (error) {
-    debugPrint('Firebase is unavailable on this platform: $error');
-  }
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
 
   runApp(const MyApp());
 }
@@ -51,7 +45,7 @@ class AuthGate extends StatelessWidget {
 
         // Firebase restores an existing session automatically. Signed-in users
         // therefore never return to onboarding until they explicitly log out.
-        return snapshot.hasData ? const HomeScreen() : const FlashScreen();
+        return snapshot.hasData ? const HomePage() : const FlashScreen();
       },
     );
   }

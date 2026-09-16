@@ -16,4 +16,5 @@ class AppColors {
   static const Color subtitleGray = Color(0xFF6B7280);
   static const Color labelGray = Color(0xFF8C97A3);
   static const Color success = Color.fromARGB(255, 21, 124, 0);
+  static const Color textDark = Color(0xFF1D2338);
 }
