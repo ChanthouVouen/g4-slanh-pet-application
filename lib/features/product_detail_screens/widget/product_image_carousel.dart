@@ -69,6 +69,9 @@ class _ProductImageCarouselState extends State<ProductImageCarousel> {
   @override
   Widget build(BuildContext context) {
     final pageCount = widget.images.isEmpty ? 1 : widget.images.length;
+    // The banner image intentionally bleeds behind the status bar, but the
+    // floating buttons on top of it still need to clear it.
+    final topInset = MediaQuery.paddingOf(context).top + 12;
 
     return SizedBox(
       height: 300,
@@ -87,7 +90,7 @@ class _ProductImageCarouselState extends State<ProductImageCarousel> {
             ),
           ),
           Positioned(
-            top: 12,
+            top: topInset,
             left: 16,
             child: RoundIconButton(
               icon: Icons.arrow_back,
@@ -95,7 +98,7 @@ class _ProductImageCarouselState extends State<ProductImageCarousel> {
             ),
           ),
           Positioned(
-            top: 12,
+            top: topInset,
             right: 16,
             child: RoundIconButton(
               icon: widget.isFavorite ? Icons.favorite : Icons.favorite_border,

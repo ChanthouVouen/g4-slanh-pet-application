@@ -3,6 +3,7 @@ import 'package:slanh_pet_application/core/services/fireStore_service/firestore_
 import 'package:slanh_pet_application/core/widgets/firestore_stream_builder.dart';
 import 'package:slanh_pet_application/features/cart/cart_store.dart';
 import 'package:slanh_pet_application/features/home/widget_home/Popular_product_part/popular_productcard.dart';
+import 'package:slanh_pet_application/features/product_detail_screens/product_detail.dart';
 
 class ProductPart extends StatelessWidget {
   final String selectedCategory;
@@ -57,7 +58,7 @@ class ProductPart extends StatelessWidget {
                   return GridView.builder(
                     shrinkWrap: true,
                     physics: const NeverScrollableScrollPhysics(),
-                    padding: EdgeInsets.zero,
+                    padding: const EdgeInsets.only(bottom: 24),
                     gridDelegate:
                         const SliverGridDelegateWithFixedCrossAxisCount(
                           crossAxisCount: 2,
@@ -73,21 +74,30 @@ class ProductPart extends StatelessWidget {
                       final productPrice =
                           (data['price'] as num?)?.toDouble() ?? 0.0;
 
-                      return PopularProductCard(
-                        image: data['image'] ?? '',
-                        name: productName,
-                        rating: (data['rating'] as num?)?.toDouble() ?? 0.0,
-                        price: productPrice,
-                        onAddToCart: () {
-                          if (onAddToCart != null) {
-                            onAddToCart!(productName, productPrice);
-                          } else {
-                            CartStore.instance.addItem(
-                              productName,
-                              productPrice,
-                            );
-                          }
-                        },
+                      return GestureDetector(
+                        onTap: () => Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) =>
+                                ProductDetailScreen(productId: product.id),
+                          ),
+                        ),
+                        child: PopularProductCard(
+                          image: data['image'] ?? '',
+                          name: productName,
+                          rating: (data['rating'] as num?)?.toDouble() ?? 0.0,
+                          price: productPrice,
+                          onAddToCart: () {
+                            if (onAddToCart != null) {
+                              onAddToCart!(productName, productPrice);
+                            } else {
+                              CartStore.instance.addItem(
+                                productName,
+                                productPrice,
+                              );
+                            }
+                          },
+                        ),
                       );
                     },
                   );

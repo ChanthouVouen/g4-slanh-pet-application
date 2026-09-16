@@ -1,7 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class FirestoreService {
-  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+  FirestoreService({FirebaseFirestore? firestore})
+    : _firestore = firestore ?? FirebaseFirestore.instance;
+
+  final FirebaseFirestore _firestore;
+
 
   Stream<List<QueryDocumentSnapshot<Map<String, dynamic>>>> getCollection(
     String collectionName,
