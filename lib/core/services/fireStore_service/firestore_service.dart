@@ -31,4 +31,26 @@ class FirestoreService {
       }).toList();
     });
   }
+
+  // Search products by name or type
+  Stream<List<QueryDocumentSnapshot<Map<String, dynamic>>>> searchProducts(
+    String searchQuery,
+  ) {
+    return _firestore.collection('products').snapshots().map((snapshot) {
+      final query = searchQuery.trim().toLowerCase();
+
+      if (query.isEmpty) {
+        return snapshot.docs;
+      }
+
+      return snapshot.docs.where((product) {
+        final data = product.data();
+
+        final name = data['name']?.toString().trim().toLowerCase() ?? '';
+        final type = data['type']?.toString().trim().toLowerCase() ?? '';
+
+        return name.contains(query) || type.contains(query);
+      }).toList();
+    });
+  }
 }
