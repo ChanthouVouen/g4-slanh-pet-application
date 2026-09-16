@@ -62,6 +62,6 @@ class ServiceModel {
 
   @override
   String toString() {
-    return 'ServiceModel(id: $id, name: $name, price: \$${price}, clinic: ${clinic.toString()})';
+    return 'ServiceModel(id: $id, name: $name, price: \$$price, clinic: $clinic)';
   }
 }

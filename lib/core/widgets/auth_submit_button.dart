@@ -5,12 +5,14 @@ class AuthSubmitButton extends StatelessWidget {
   final String label;
   final bool isSubmitting;
   final VoidCallback onPressed;
+  final bool enabled;
 
   const AuthSubmitButton({
     super.key,
     required this.label,
     required this.isSubmitting,
     required this.onPressed,
+    this.enabled = true,
   });
 
   static const double height = 56;
@@ -21,7 +23,7 @@ class AuthSubmitButton extends StatelessWidget {
       width: double.infinity,
       height: height,
       child: ElevatedButton(
-        onPressed: isSubmitting ? null : onPressed,
+        onPressed: (isSubmitting || !enabled) ? null : onPressed,
         style: ElevatedButton.styleFrom(
           backgroundColor: AppColors.orange,
           foregroundColor: Colors.white,

@@ -48,6 +48,27 @@ class OrderItemModel {
     );
   }
 
+  /// Builds an [OrderItemModel] from a `product_orders` Firestore document
+  /// (a placed cart checkout).
+  factory OrderItemModel.fromProductOrder(Map<String, dynamic> data) {
+    final rawDate = data['createdAt'];
+    final itemCount = (data['itemCount'] as num?)?.toInt() ?? 0;
+
+    return OrderItemModel(
+      code: (data['orderRef'] as String?) ?? '',
+      title: itemCount == 1 ? '1 item' : '$itemCount items',
+      clinicName: 'Delivery to',
+      clinicAddress: (data['deliveryAddress'] as String?) ?? '',
+      date: rawDate is Timestamp ? rawDate.toDate() : DateTime.now(),
+      time: '',
+      price: ((data['total'] as num?) ?? 0).toDouble(),
+      status: (data['status'] as String?) ?? 'pending',
+      icon: Icons.shopping_bag_outlined,
+      iconColor: AppColors.orange,
+      iconBackground: const Color(0xFFFFE7DE),
+    );
+  }
+
   @override
   String toString() {
     return 'OrderItemModel(code: $code, title: $title, date: $date, '

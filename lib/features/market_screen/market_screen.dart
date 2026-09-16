@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:slanh_pet_application/core/navigation/bottom_nav_routes.dart';
 import 'package:slanh_pet_application/core/widgets/navigation_bar.dart';
+import 'package:slanh_pet_application/features/cart/cart_screen.dart';
+import 'package:slanh_pet_application/features/cart/cart_store.dart';
 import 'package:slanh_pet_application/features/market_screen/widget/appbar_screen.dart';
 import 'package:slanh_pet_application/features/market_screen/widget/categories_part/categories_screen.dart';
 import 'package:slanh_pet_application/features/market_screen/widget/filter_part.dart';
@@ -18,6 +20,16 @@ class MarketScreen extends StatefulWidget {
 class _MarketScreenState extends State<MarketScreen> {
   String selectedCategory = "All";
 
+  void _addToCart(String productName, double price) {
+    CartStore.instance.addItem(productName, price);
+  }
+
+  void _openCartScreen(BuildContext context) {
+    Navigator.of(
+      context,
+    ).push(MaterialPageRoute(builder: (context) => const CartScreen()));
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -25,7 +37,20 @@ class _MarketScreenState extends State<MarketScreen> {
         children: [
           const SizedBox(height: 10),
 
-          const AppBarScreen(),
+          ValueListenableBuilder<List<CartProduct>>(
+            valueListenable: CartStore.instance.itemsNotifier,
+            builder: (context, items, child) {
+              final currentCartCount = items.fold<int>(
+                0,
+                (total, item) => total + item.quantity,
+              );
+
+              return AppBarScreen(
+                cartCount: currentCartCount,
+                onCartTap: () => _openCartScreen(context),
+              );
+            },
+          ),
 
           // CATEGORY
           CategoriesScreen(
@@ -41,8 +66,10 @@ class _MarketScreenState extends State<MarketScreen> {
 
           const SizedBox(height: 10),
 
-          // PRODUCTS
-          ProductPart(selectedCategory: selectedCategory),
+          ProductPart(
+            selectedCategory: selectedCategory,
+            onAddToCart: (productName, price) => _addToCart(productName, price),
+          ),
         ],
       ),
 

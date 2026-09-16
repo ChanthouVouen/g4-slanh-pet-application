@@ -65,7 +65,7 @@ class _OrderBookingState extends State<OrderBooking> {
                     return Center(child: Text('Error: ${snapshot.error}'));
                   }
 
-                  final orders = snapshot.data?.reversed.toList() ?? [];
+                  final orders = snapshot.data ?? [];
 
                   return ListView.separated(
                     padding: const EdgeInsets.fromLTRB(20, 0, 20, 24),

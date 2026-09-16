@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:slanh_pet_application/core/utility/ui_helper.dart';
 
 class PopularProductCard extends StatefulWidget {
   final String image;
   final String name;
   final double rating;
   final double price;
+  final VoidCallback? onAddToCart;
 
   const PopularProductCard({
     super.key,
@@ -12,6 +14,7 @@ class PopularProductCard extends StatefulWidget {
     required this.name,
     required this.rating,
     required this.price,
+    this.onAddToCart,
   });
 
   @override
@@ -146,7 +149,7 @@ class _PopularProductCardState extends State<PopularProductCard> {
                   color: const Color.fromARGB(255, 243, 222, 33),
                 ),
                 Text(
-                  "${widget.rating.toStringAsFixed(1)}",
+                  widget.rating.toStringAsFixed(1),
 
                   maxLines: 1,
 
@@ -162,19 +165,46 @@ class _PopularProductCardState extends State<PopularProductCard> {
           ),
 
           // =========================
-          // PRICE
+          // PRICE + ADD TO CART
           // =========================
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-
-            child: Text(
-              '\$${widget.price.toStringAsFixed(2)}',
-
-              style: const TextStyle(
-                fontSize: 18,
-                fontWeight: FontWeight.bold,
-                color: Colors.orange,
-              ),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.end,
+              children: [
+                Expanded(
+                  child: Text(
+                    '\$${widget.price.toStringAsFixed(2)}',
+                    style: const TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.orange,
+                    ),
+                  ),
+                ),
+                const SizedBox(width: 8),
+                GestureDetector(
+                  onTap: () {
+                    if (widget.onAddToCart != null) {
+                      widget.onAddToCart!();
+                    } else {
+                      UiHelpers.showSnackBar(
+                        context,
+                        'Added ${widget.name} to cart.',
+                      );
+                    }
+                  },
+                  child: Container(
+                    width: 30,
+                    height: 30,
+                    decoration: BoxDecoration(
+                      color: const Color(0xFFFF6633),
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    child: const Icon(Icons.add, color: Colors.white, size: 17),
+                  ),
+                ),
+              ],
             ),
           ),
         ],

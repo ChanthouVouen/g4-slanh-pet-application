@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:slanh_pet_application/core/services/fireStore_service/firestore_service.dart';
 import 'package:slanh_pet_application/core/widgets/firestore_stream_builder.dart';
+import 'package:slanh_pet_application/features/cart/cart_store.dart';
 import 'package:slanh_pet_application/features/home/widget_home/Popular_product_part/popular_productcard.dart';
 import 'package:slanh_pet_application/features/product_detail_screens/product_detail.dart';
 import 'package:slanh_pet_application/features/market_screen/market_screen.dart';
@@ -107,6 +108,12 @@ class PopularProductPart extends StatelessWidget {
                       name: data['name'] ?? "no Name",
                       rating: (data['rating'] as num?)?.toDouble() ?? 0.0,
                       price: (data['price'] as num?)?.toDouble() ?? 0.0,
+                      onAddToCart: () {
+                        CartStore.instance.addItem(
+                          data['name'] ?? 'Product',
+                          (data['price'] as num?)?.toDouble() ?? 0.0,
+                        );
+                      },
                     ),
                   );
                 },

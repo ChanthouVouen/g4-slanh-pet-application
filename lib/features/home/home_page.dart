@@ -5,7 +5,6 @@ import 'package:slanh_pet_application/features/home/widget_home/AdoptPet_part/ad
 import 'package:slanh_pet_application/features/home/widget_home/Community_part/community_part.dart';
 import 'package:slanh_pet_application/features/home/widget_home/Discount_part/discount_banner.dart';
 import 'package:slanh_pet_application/features/home/widget_home/Popular_product_part/popular_product_part.dart';
-// import 'package:slanh_pet_application/features/home/widget_home/Popular_product_part/popular_product_part.dart';
 import 'package:slanh_pet_application/features/home/widget_home/QuickService_part/quickService_part.dart';
 import 'package:slanh_pet_application/features/home/widget_home/SearchImplement_part/search_implement.dart';
 import 'package:slanh_pet_application/features/home/widget_home/shopByPet_part/shopby_pet_part.dart';

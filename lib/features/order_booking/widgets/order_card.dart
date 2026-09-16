@@ -107,7 +107,9 @@ class OrderCard extends StatelessWidget {
           Row(
             children: [
               Text(
-                " ${_formatDate(order.date)} | (${order.time})",
+                order.time.isEmpty
+                    ? " ${_formatDate(order.date)}"
+                    : " ${_formatDate(order.date)} | (${order.time})",
                 style: const TextStyle(
                   fontSize: 12,
                   fontWeight: FontWeight.w600,
