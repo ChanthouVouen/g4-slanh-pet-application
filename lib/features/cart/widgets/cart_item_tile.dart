@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:slanh_pet_application/core/constants/app_colors.dart';
 import 'package:slanh_pet_application/features/product_detail_screens/widget/quantity_stepper.dart';
 
-import '../cart_store.dart';
+import 'package:slanh_pet_application/core/state/cart_store.dart';
 
 class CartItemTile extends StatelessWidget {
   const CartItemTile({

@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:latlong2/latlong.dart';
 
-import 'package:slanh_pet_application/features/map_screen/models/route_result.dart';
+import 'package:slanh_pet_application/core/models/map/route_result.dart';
 
 class DirectionsException implements Exception {
   const DirectionsException(this.message);

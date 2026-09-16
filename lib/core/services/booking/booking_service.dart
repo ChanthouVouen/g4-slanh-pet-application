@@ -4,7 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 
-import 'package:slanh_pet_application/features/services/models/service_model.dart';
+import 'package:slanh_pet_application/core/models/service.dart';
 
 class BookingService {
   FirebaseFirestore get _firestore => FirebaseFirestore.instance;

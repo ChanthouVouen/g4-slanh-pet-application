@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:slanh_pet_application/core/constants/app_colors.dart';
 import 'package:slanh_pet_application/core/navigation/bottom_nav_routes.dart';
 import 'package:slanh_pet_application/core/widgets/navigation_bar.dart';
-import 'package:slanh_pet_application/features/order_booking/models/order_item_model.dart';
+import 'package:slanh_pet_application/core/models/orders/order_item.dart';
+import 'package:slanh_pet_application/core/services/orders/order_history_service.dart';
 import 'package:slanh_pet_application/features/order_booking/widgets/order_card.dart';
 import 'package:slanh_pet_application/features/order_booking/widgets/order_filter_tabs.dart';
-import './data/get_booking.dart';
 
 class OrderBooking extends StatefulWidget {
   const OrderBooking({super.key});
@@ -25,7 +25,7 @@ class _OrderBookingState extends State<OrderBooking> {
   @override
   void initState() {
     super.initState();
-    _orderData = getBookingData();
+    _orderData = OrderHistoryService().fetchCurrentUserOrders();
   }
 
   @override

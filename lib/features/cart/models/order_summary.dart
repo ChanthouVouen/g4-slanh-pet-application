@@ -1,4 +1,4 @@
-import 'payment_method.dart';
+import 'package:slanh_pet_application/core/models/orders/payment_method.dart';
 
 /// Snapshot of a placed cart order, shown on the order-confirmed screen.
 class OrderSummary {

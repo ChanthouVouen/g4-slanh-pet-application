@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:slanh_pet_application/features/order_booking/data/get_booking.dart';
-import 'package:slanh_pet_application/features/order_booking/models/order_item_model.dart';
+import 'package:slanh_pet_application/core/models/commerce/wishlist_item.dart';
+import 'package:slanh_pet_application/core/models/orders/order_item.dart';
+import 'package:slanh_pet_application/core/models/profile/profile.dart';
+import 'package:slanh_pet_application/core/services/orders/order_history_service.dart';
+import 'package:slanh_pet_application/core/state/wishlist_store.dart';
 
-import '../models/profile_model.dart';
-import '../models/wishlist_model.dart';
-import '../wishlist_store.dart';
 import 'profile_image.dart';
 
 class ProfileHero extends StatelessWidget {
@@ -139,7 +139,8 @@ class ProfileStats extends StatefulWidget {
 }
 
 class _ProfileStatsState extends State<ProfileStats> {
-  late final Future<List<OrderItemModel>> _ordersFuture = getBookingData();
+  late final Future<List<OrderItemModel>> _ordersFuture = OrderHistoryService()
+      .fetchCurrentUserOrders();
 
   @override
   Widget build(BuildContext context) {

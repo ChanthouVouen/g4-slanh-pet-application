@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:slanh_pet_application/core/constants/app_colors.dart';
 
-import '../../models/delivery_address.dart';
+import 'package:slanh_pet_application/core/models/orders/delivery_address.dart';
 
 /// Shows a bottom sheet prefilled with [current], returning the edited
 /// [DeliveryAddress] if the user saves, or null if they dismiss it.

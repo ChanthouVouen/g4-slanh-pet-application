@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:slanh_pet_application/core/constants/app_colors.dart';
 import 'package:slanh_pet_application/core/widgets/section_card.dart';
 
-import '../../cart_store.dart';
+import 'package:slanh_pet_application/core/state/cart_store.dart';
 
 class OrderItemsCard extends StatelessWidget {
   const OrderItemsCard({super.key, required this.items, required this.total});
@@ -14,7 +14,10 @@ class OrderItemsCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return SectionCard(
       children: [
-        SectionHeader(Icons.shopping_bag_outlined, 'Order Items (${items.length})'),
+        SectionHeader(
+          Icons.shopping_bag_outlined,
+          'Order Items (${items.length})',
+        ),
         const SizedBox(height: 12),
         for (final item in items)
           Padding(

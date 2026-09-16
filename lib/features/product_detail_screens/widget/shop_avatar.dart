@@ -16,10 +16,7 @@ class ShopAvatar extends StatelessWidget {
         shape: BoxShape.circle,
         image: imageUrl.isEmpty
             ? null
-            : DecorationImage(
-                image: NetworkImage(imageUrl),
-                fit: BoxFit.cover,
-              ),
+            : DecorationImage(image: NetworkImage(imageUrl), fit: BoxFit.cover),
       ),
       child: imageUrl.isEmpty
           ? const Icon(

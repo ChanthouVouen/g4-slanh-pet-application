@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import '../models/address_model.dart';
+import '../../models/profile/address.dart';
 
 class AddressRepository {
   AddressRepository({FirebaseFirestore? firestore, FirebaseAuth? auth})
@@ -81,7 +81,7 @@ class AddressRepository {
     required String state,
     required String country,
   }) {
-    final user = _requireUser();
+    _requireUser();
     return _collection.doc(address.id).update({
       'label': label,
       'fullName': fullName,
@@ -97,7 +97,7 @@ class AddressRepository {
   }
 
   Future<void> deleteAddress(AddressModel address) {
-    final user = _requireUser();
+    _requireUser();
     return _collection.doc(address.id).delete();
   }
 

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'data/address_data.dart';
-import 'models/address_model.dart';
+import 'package:slanh_pet_application/core/models/profile/address.dart';
+import 'package:slanh_pet_application/core/services/profile/address_repository.dart';
 import 'widgets/address_widgets.dart';
 
 class AddressesScreen extends StatefulWidget {

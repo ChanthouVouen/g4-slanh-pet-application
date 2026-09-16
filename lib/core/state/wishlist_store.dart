@@ -1,10 +1,7 @@
 import 'package:flutter/foundation.dart';
 
-import 'models/wishlist_model.dart';
+import '../models/commerce/wishlist_item.dart';
 
-/// In-memory, app-wide wishlist shared by every product card (Home, Market,
-/// Search) and the Wishlist screen — mirrors CartStore's pattern so
-/// favoriting a product anywhere reflects everywhere immediately.
 class WishlistStore {
   WishlistStore._();
 

@@ -19,6 +19,8 @@ class Product {
     required this.bannerColors,
     required this.image,
     required this.images,
+    this.type = '',
+    this.stock = 0,
   });
 
   final String id;
@@ -29,6 +31,13 @@ class Product {
   final double rating;
   final int soldCount;
   final int reviewCount;
+
+  /// Market category ("Food", "Toy", "Accessories", "Pets") used to filter
+  /// the Market screen's category tabs.
+  final String type;
+
+  /// Units currently in stock; set and maintained by the seller.
+  final int stock;
 
   /// References the owning seller's document in the `shops` collection
   /// (`shops/{shopId}`). The shop's name, logo, rating and follower count are
@@ -84,6 +93,8 @@ class Product {
       bannerColors: List<Color>.from(
         (json['bannerColors'] as List? ?? []).map((e) => Color(e as int)),
       ),
+      type: (json['type'] as String?) ?? '',
+      stock: (json['stock'] as num?)?.toInt() ?? 0,
     );
   }
 
@@ -107,6 +118,37 @@ class Product {
         {for (final e in nutrition) e.label: e.value},
       ],
       'bannerColors': bannerColors.map((e) => e.toARGB32()).toList(),
+      'type': type,
+      'stock': stock,
     };
+  }
+
+  Product copyWith({
+    String? name,
+    double? price,
+    String? image,
+    String? description,
+    String? type,
+    int? stock,
+  }) {
+    return Product(
+      id: id,
+      name: name ?? this.name,
+      badge: badge,
+      price: price ?? this.price,
+      originalPrice: originalPrice,
+      rating: rating,
+      soldCount: soldCount,
+      reviewCount: reviewCount,
+      shopId: shopId,
+      description: description ?? this.description,
+      details: details,
+      nutrition: nutrition,
+      bannerColors: bannerColors,
+      image: image ?? this.image,
+      images: image != null ? [image] : images,
+      type: type ?? this.type,
+      stock: stock ?? this.stock,
+    );
   }
 }

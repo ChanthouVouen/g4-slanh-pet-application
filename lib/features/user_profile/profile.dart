@@ -8,8 +8,8 @@ import 'addresses.dart';
 import 'notification_settings.dart';
 import 'settings.dart';
 import 'wishlist.dart';
-import 'data/profile_data.dart';
-import 'models/profile_model.dart';
+import 'package:slanh_pet_application/core/services/profile/profile_repository.dart';
+import 'package:slanh_pet_application/core/models/profile/profile.dart';
 import 'widgets/profile_widgets.dart';
 
 class ProfileScreen extends StatelessWidget {

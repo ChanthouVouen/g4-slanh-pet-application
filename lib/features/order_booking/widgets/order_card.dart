@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:slanh_pet_application/core/constants/app_colors.dart';
-import 'package:slanh_pet_application/features/order_booking/models/order_item_model.dart';
+import 'package:slanh_pet_application/core/models/orders/order_item.dart';
 
 class OrderCard extends StatelessWidget {
   const OrderCard({super.key, required this.order, this.onTrackPackage});

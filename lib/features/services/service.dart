@@ -4,7 +4,7 @@ import 'package:slanh_pet_application/core/widgets/app_search_field.dart';
 import 'package:slanh_pet_application/core/widgets/navigation_bar.dart';
 import 'package:slanh_pet_application/features/clinic_detail/clinic_detail.dart';
 import 'package:slanh_pet_application/features/map_screen/map_screen.dart';
-import 'package:slanh_pet_application/features/services/models/service_model.dart';
+import 'package:slanh_pet_application/core/models/service.dart';
 
 import 'widgets/near_you_header.dart';
 import 'widgets/clinic_card_card.dart';

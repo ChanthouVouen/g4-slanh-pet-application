@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:slanh_pet_application/core/utility/ui_helper.dart';
 import 'package:slanh_pet_application/core/widgets/navigation_bar.dart';
-import 'package:slanh_pet_application/features/cart/cart_store.dart';
+import 'package:slanh_pet_application/core/models/commerce/wishlist_item.dart';
+import 'package:slanh_pet_application/core/state/cart_store.dart';
+import 'package:slanh_pet_application/core/state/wishlist_store.dart';
 import 'package:slanh_pet_application/features/home/widget_home/Popular_product_part/popular_productcard.dart';
-
-import 'models/wishlist_model.dart';
-import 'wishlist_store.dart';
 
 class WishlistScreen extends StatelessWidget {
   const WishlistScreen({super.key});
@@ -67,9 +66,8 @@ class WishlistScreen extends StatelessWidget {
                       name: product.name,
                       rating: product.rating,
                       price: product.price,
-                      onRemove: () => WishlistStore.instance.remove(
-                        product.name,
-                      ),
+                      onRemove: () =>
+                          WishlistStore.instance.remove(product.name),
                       onAddToCart: () => _addToCart(context, product),
                     );
                   },

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:slanh_pet_application/core/constants/app_colors.dart';
 
-import '../models/route_result.dart';
+import 'package:slanh_pet_application/core/models/map/route_result.dart';
 
 /// Bottom card summarizing the active route, with a button to clear it.
 class RouteInfoBar extends StatelessWidget {
@@ -30,7 +30,11 @@ class RouteInfoBar extends StatelessWidget {
             padding: const EdgeInsets.all(16),
             child: Row(
               children: [
-                const Icon(Icons.directions_rounded, color: AppColors.orange, size: 26),
+                const Icon(
+                  Icons.directions_rounded,
+                  color: AppColors.orange,
+                  size: 26,
+                ),
                 const SizedBox(width: 12),
                 Expanded(
                   child: Column(

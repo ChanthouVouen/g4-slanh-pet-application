@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
-import '../models/delivery_address.dart';
+import '../../models/orders/delivery_address.dart';
 
 /// Reads and writes the signed-in user's delivery address, stored on their
 /// users/{uid} profile document alongside fullName/phone.

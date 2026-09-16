@@ -1,5 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import '../models/service_model.dart';
+import 'package:slanh_pet_application/core/models/service.dart';
 
 Future<List<ServiceModel>> getServiceData() async {
   final FirebaseFirestore db = FirebaseFirestore.instance;
@@ -40,8 +40,7 @@ Future<List<ServiceModel>> getServiceData() async {
     String clinicId = serviceData['clinic_id'] ?? '';
 
     serviceData['id'] = doc.id;
-    serviceData['clinic'] =
-        clinicMap[clinicId] ?? {};
+    serviceData['clinic'] = clinicMap[clinicId] ?? {};
 
     return ServiceModel.fromMap(serviceData);
   }).toList();

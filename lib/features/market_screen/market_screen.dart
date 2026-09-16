@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:slanh_pet_application/core/navigation/bottom_nav_routes.dart';
+import 'package:slanh_pet_application/core/utility/ui_helper.dart';
 import 'package:slanh_pet_application/core/widgets/navigation_bar.dart';
 import 'package:slanh_pet_application/features/cart/cart_screen.dart';
-import 'package:slanh_pet_application/features/cart/cart_store.dart';
+import 'package:slanh_pet_application/core/state/cart_store.dart';
 import 'package:slanh_pet_application/features/market_screen/widget/appbar_screen.dart';
 import 'package:slanh_pet_application/features/market_screen/widget/categories_part/categories_screen.dart';
 import 'package:slanh_pet_application/features/market_screen/widget/filter_part.dart';
@@ -20,8 +21,21 @@ class MarketScreen extends StatefulWidget {
 class _MarketScreenState extends State<MarketScreen> {
   String selectedCategory = "All";
 
-  void _addToCart(String productName, double price) {
-    CartStore.instance.addItem(productName, price);
+  void _addToCart(BuildContext context, AddToCartDetails details) {
+    final added = CartStore.instance.addItem(
+      details.productName,
+      details.price,
+      shopId: details.shopId,
+      maxStock: details.stock,
+      productId: details.productId,
+    );
+    if (!added) {
+      UiHelpers.showSnackBar(
+        context,
+        'Only ${details.stock} in stock.',
+        isError: true,
+      );
+    }
   }
 
   void _openCartScreen(BuildContext context) {
@@ -68,7 +82,7 @@ class _MarketScreenState extends State<MarketScreen> {
 
           ProductPart(
             selectedCategory: selectedCategory,
-            onAddToCart: (productName, price) => _addToCart(productName, price),
+            onAddToCart: (details) => _addToCart(context, details),
           ),
         ],
       ),

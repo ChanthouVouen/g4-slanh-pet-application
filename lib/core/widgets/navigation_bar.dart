@@ -5,17 +5,19 @@ class CustomBottomNavBar extends StatelessWidget {
     super.key,
     required this.currentIndex,
     required this.onTap,
+    this.items = _defaultItems,
   });
 
   final int currentIndex;
   final ValueChanged<int> onTap;
+  final List<NavBarItemData> items;
 
-  static const _items = <_NavBarItemData>[
-    _NavBarItemData(icon: Icons.home_rounded, label: 'Home'),
-    _NavBarItemData(icon: Icons.storefront_rounded, label: 'Market'),
-    _NavBarItemData(icon: Icons.content_cut_rounded, label: 'Services'),
-    _NavBarItemData(icon: Icons.receipt_long_rounded, label: 'Orders'),
-    _NavBarItemData(icon: Icons.person_rounded, label: 'Profile'),
+  static const _defaultItems = <NavBarItemData>[
+    NavBarItemData(icon: Icons.home_rounded, label: 'Home'),
+    NavBarItemData(icon: Icons.storefront_rounded, label: 'Market'),
+    NavBarItemData(icon: Icons.content_cut_rounded, label: 'Services'),
+    NavBarItemData(icon: Icons.receipt_long_rounded, label: 'Orders'),
+    NavBarItemData(icon: Icons.person_rounded, label: 'Profile'),
   ];
 
   @override
@@ -38,9 +40,9 @@ class CustomBottomNavBar extends StatelessWidget {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
-              for (var index = 0; index < _items.length; index++)
+              for (var index = 0; index < items.length; index++)
                 _NavBarItem(
-                  data: _items[index],
+                  data: items[index],
                   selected: index == currentIndex,
                   onTap: () => onTap(index),
                 ),
@@ -52,8 +54,8 @@ class CustomBottomNavBar extends StatelessWidget {
   }
 }
 
-class _NavBarItemData {
-  const _NavBarItemData({required this.icon, required this.label});
+class NavBarItemData {
+  const NavBarItemData({required this.icon, required this.label});
 
   final IconData icon;
   final String label;
@@ -66,7 +68,7 @@ class _NavBarItem extends StatelessWidget {
     required this.onTap,
   });
 
-  final _NavBarItemData data;
+  final NavBarItemData data;
   final bool selected;
   final VoidCallback onTap;
 

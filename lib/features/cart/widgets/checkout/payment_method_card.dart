@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:slanh_pet_application/core/widgets/section_card.dart';
 import 'package:slanh_pet_application/core/widgets/selectable_option_tile.dart';
 
-import '../../models/payment_method.dart';
+import 'package:slanh_pet_application/core/models/orders/payment_method.dart';
 
 class PaymentMethodCard extends StatelessWidget {
   const PaymentMethodCard({

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:slanh_pet_application/core/constants/app_colors.dart';
 
-import '../models/shop_model.dart';
+import 'package:slanh_pet_application/core/models/commerce/shop.dart';
 import 'dot.dart';
 import 'shop_avatar.dart';
 

@@ -7,7 +7,7 @@ import 'package:flutter/foundation.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:path/path.dart' as p;
-import '../models/profile_model.dart';
+import '../../models/profile/profile.dart';
 
 class ProfileRepository {
   ProfileRepository({FirebaseFirestore? firestore})
@@ -56,7 +56,9 @@ class ProfileRepository {
     final profileDir = await _getProfileImageDirectory();
     final ext = p.extension(image.name);
     final fileName = '${userId}_${DateTime.now().millisecondsSinceEpoch}$ext';
-    final savedImage = await File(image.path).copy('${profileDir.path}/$fileName');
+    final savedImage = await File(
+      image.path,
+    ).copy('${profileDir.path}/$fileName');
     await _firestore.collection('users').doc(userId).set({
       'photoUrl': savedImage.path,
     }, SetOptions(merge: true));
@@ -67,7 +69,8 @@ class ProfileRepository {
     required XFile image,
   }) async {
     final bytes = await image.readAsBytes();
-    final dataUrl = 'data:${_mimeType(image.name)};base64,${base64Encode(bytes)}';
+    final dataUrl =
+        'data:${_mimeType(image.name)};base64,${base64Encode(bytes)}';
     await _firestore.collection('users').doc(userId).set({
       'photoUrl': dataUrl,
     }, SetOptions(merge: true));
@@ -89,9 +92,7 @@ class ProfileRepository {
       final appDir = await getApplicationDocumentsDirectory();
       profileDir = Directory('${appDir.path}/profile_photos');
     } catch (_) {
-      profileDir = Directory(
-        '${Directory.current.path}/profile_photos',
-      );
+      profileDir = Directory('${Directory.current.path}/profile_photos');
     }
     if (!await profileDir.exists()) {
       await profileDir.create(recursive: true);

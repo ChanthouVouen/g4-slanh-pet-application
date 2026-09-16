@@ -8,9 +8,9 @@ import 'package:slanh_pet_application/features/clinic_detail/widgets/comfirm_boo
 import 'package:slanh_pet_application/features/clinic_detail/widgets/comfirm_booking/date_selection.dart';
 import 'package:slanh_pet_application/features/clinic_detail/widgets/comfirm_booking/price_breakdown.dart';
 import 'package:slanh_pet_application/features/clinic_detail/widgets/comfirm_booking/time_selection.dart';
-import 'package:slanh_pet_application/features/services/models/service_model.dart';
+import 'package:slanh_pet_application/core/models/booking.dart';
+import 'package:slanh_pet_application/core/models/service.dart';
 
-import 'models/booking_model.dart';
 import 'success_booking.dart';
 
 const double _bookingFee = 2.0;
@@ -182,7 +182,11 @@ class _BookAppointmentScreenState extends State<BookAppointmentScreen> {
             ),
             const SizedBox(height: 24),
 
-            PriceBreakdown(bookingFee: _bookingFee, totalPrice: _total),
+            PriceBreakdown(
+              serviceFee: _servicePrice,
+              bookingFee: _bookingFee,
+              totalPrice: _total,
+            ),
             const SizedBox(height: 20),
 
             AuthSubmitButton(

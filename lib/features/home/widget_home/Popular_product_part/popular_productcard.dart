@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:slanh_pet_application/core/utility/ui_helper.dart';
-import 'package:slanh_pet_application/features/user_profile/models/wishlist_model.dart';
-import 'package:slanh_pet_application/features/user_profile/wishlist_store.dart';
+import 'package:slanh_pet_application/core/models/commerce/wishlist_item.dart';
+import 'package:slanh_pet_application/core/state/wishlist_store.dart';
 
 class PopularProductCard extends StatefulWidget {
   final String image;

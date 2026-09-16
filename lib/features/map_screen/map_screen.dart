@@ -7,7 +7,7 @@ import 'package:slanh_pet_application/core/services/map_services/location_servic
 import 'controllers/live_location_controller.dart';
 import 'controllers/road_distances_controller.dart';
 import 'controllers/service_locations_controller.dart';
-import 'models/route_result.dart';
+import 'package:slanh_pet_application/core/models/map/route_result.dart';
 import 'models/service_location.dart';
 import 'utils/geo.dart';
 import 'widgets/current_location_dot.dart';

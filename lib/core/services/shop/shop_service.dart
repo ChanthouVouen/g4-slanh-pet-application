@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-import 'package:slanh_pet_application/features/product_detail_screens/models/shop_model.dart';
+import 'package:slanh_pet_application/core/models/commerce/shop.dart';
 
 class ShopService {
   FirebaseFirestore get _firestore => FirebaseFirestore.instance;
@@ -16,5 +16,19 @@ class ShopService {
     final data = snapshot.data();
     if (data == null) return null;
     return Shop.fromJson(data, snapshot.id);
+  }
+
+  /// Streams the shop owned by the given uid, for the shop owner's own
+  /// dashboard/settings screens.
+  Stream<Shop?> watchShop(String id) {
+    return _shops.doc(id).snapshots().map((snapshot) {
+      final data = snapshot.data();
+      if (data == null) return null;
+      return Shop.fromJson(data, snapshot.id);
+    });
+  }
+
+  Future<void> updateShop(Shop shop) {
+    return _shops.doc(shop.id).set(shop.toUpdateMap(), SetOptions(merge: true));
   }
 }

@@ -9,6 +9,11 @@ class Shop {
     required this.name,
     required this.rating,
     required this.followers,
+    this.tagline = '',
+    this.phone = '',
+    this.email = '',
+    this.address = '',
+    this.isOpen = true,
   });
 
   final String id;
@@ -16,6 +21,11 @@ class Shop {
   final String name;
   final double rating;
   final String followers;
+  final String tagline;
+  final String phone;
+  final String email;
+  final String address;
+  final bool isOpen;
 
   factory Shop.fromJson(Map<String, dynamic> json, String docId) {
     return Shop(
@@ -26,6 +36,26 @@ class Shop {
       name: json['shopName']?.toString() ?? json['name']?.toString() ?? '',
       rating: (json['rating'] as num?)?.toDouble() ?? 0.0,
       followers: json['followers']?.toString() ?? '0',
+      tagline: json['tagline']?.toString() ?? '',
+      phone: json['phone']?.toString() ?? '',
+      email: json['email']?.toString() ?? '',
+      // Registration writes `shopAddress`; `address` is accepted for shops
+      // edited from the shop owner's settings screen.
+      address:
+          json['shopAddress']?.toString() ?? json['address']?.toString() ?? '',
+      isOpen: json['isOpen'] as bool? ?? true,
     );
+  }
+
+  Map<String, dynamic> toUpdateMap() {
+    return {
+      'shopName': name,
+      'tagline': tagline,
+      'phone': phone,
+      'email': email,
+      'shopAddress': address,
+      'isOpen': isOpen,
+      if (image.isNotEmpty) 'image': image,
+    };
   }
 }

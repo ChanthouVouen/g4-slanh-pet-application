@@ -5,7 +5,7 @@ import 'package:slanh_pet_application/core/widgets/navigation_bar.dart';
 import 'package:slanh_pet_application/core/widgets/status_pill.dart';
 import 'package:slanh_pet_application/features/clinic_detail/widgets/clinic_detail/header_image.dart';
 import 'package:slanh_pet_application/features/clinic_detail/widgets/clinic_detail/location_rating.dart';
-import 'package:slanh_pet_application/features/services/models/service_model.dart';
+import 'package:slanh_pet_application/core/models/service.dart';
 
 import 'confirm_booking.dart';
 

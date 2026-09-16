@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 // import 'package:slanh_pet_application/features/home/widget_home/QuickService_part/contents_quickservices.dart';
 import 'package:slanh_pet_application/features/home/widget_home/shopByPet_part/contents_shopby_part.dart';
 import 'package:slanh_pet_application/features/market_screen/market_screen.dart';
-import 'package:slanh_pet_application/features/services/service.dart';
 
 class ShopbyPetPart extends StatelessWidget {
   const ShopbyPetPart({super.key});

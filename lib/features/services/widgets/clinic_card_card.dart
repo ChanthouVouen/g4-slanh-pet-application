@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:slanh_pet_application/core/constants/app_colors.dart';
-import 'package:slanh_pet_application/features/services/models/service_model.dart';
+import 'package:slanh_pet_application/core/models/service.dart';
 
 class ClinicCard extends StatelessWidget {
   const ClinicCard({super.key, required this.service, required this.onTap});

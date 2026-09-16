@@ -1,5 +1,5 @@
 import 'package:flutter/widgets.dart';
-import 'package:slanh_pet_application/features/clinic_detail/models/booking_model.dart';
+import 'package:slanh_pet_application/core/models/booking.dart';
 import 'package:slanh_pet_application/features/clinic_detail/widgets/comfirm_booking/date_tile.dart';
 
 class DateSelection extends StatelessWidget {

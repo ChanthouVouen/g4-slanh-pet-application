@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:slanh_pet_application/core/services/fireStore_service/firestore_service.dart';
+import 'package:slanh_pet_application/core/utility/ui_helper.dart';
 import 'package:slanh_pet_application/core/widgets/firestore_stream_builder.dart';
-import 'package:slanh_pet_application/features/cart/cart_store.dart';
+import 'package:slanh_pet_application/core/state/cart_store.dart';
 import 'package:slanh_pet_application/features/home/widget_home/Popular_product_part/popular_productcard.dart';
 import 'package:slanh_pet_application/features/product_detail_screens/product_detail.dart';
 import 'package:slanh_pet_application/features/market_screen/market_screen.dart';
@@ -71,7 +72,15 @@ class PopularProductPart extends StatelessWidget {
           // PRODUCT GRID
           FirestoreStreamBuilder(
             stream: FirestoreService().getCollection('products'),
-            builder: (products) {
+            builder: (allProducts) {
+              // Hide products the shop has explicitly marked out of stock;
+              // a missing `stock` field means it isn't tracked, so keep
+              // showing it (backward-compatible with older products).
+              final products = allProducts.where((doc) {
+                final stock = doc.data()['stock'];
+                return stock == null || (stock as num).toInt() > 0;
+              }).toList();
+
               return GridView.builder(
                 shrinkWrap: true,
                 physics: const NeverScrollableScrollPhysics(),
@@ -109,10 +118,21 @@ class PopularProductPart extends StatelessWidget {
                       rating: (data['rating'] as num?)?.toDouble() ?? 0.0,
                       price: (data['price'] as num?)?.toDouble() ?? 0.0,
                       onAddToCart: () {
-                        CartStore.instance.addItem(
+                        final stock = (data['stock'] as num?)?.toInt();
+                        final added = CartStore.instance.addItem(
                           data['name'] ?? 'Product',
                           (data['price'] as num?)?.toDouble() ?? 0.0,
+                          shopId: data['shopid'] as String?,
+                          maxStock: stock,
+                          productId: product.id,
                         );
+                        if (!added) {
+                          UiHelpers.showSnackBar(
+                            context,
+                            'Only $stock in stock.',
+                            isError: true,
+                          );
+                        }
                       },
                     ),
                   );

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:slanh_pet_application/core/widgets/navigation_bar.dart';
-import 'models/profile_model.dart';
+import 'package:slanh_pet_application/core/models/profile/profile.dart';
 import 'widgets/edit_profile_widgets.dart';
 
 class EditProfileScreen extends StatefulWidget {
@@ -19,7 +19,8 @@ class EditProfileScreen extends StatefulWidget {
     String dateOfBirth,
     String bio,
     String gender,
-  ) onSave;
+  )
+  onSave;
   final Future<void> Function(XFile image) onPhotoSelected;
 
   @override

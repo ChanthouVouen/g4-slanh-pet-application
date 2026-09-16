@@ -6,7 +6,6 @@ class FirestoreService {
 
   final FirebaseFirestore _firestore;
 
-
   Stream<List<QueryDocumentSnapshot<Map<String, dynamic>>>> getCollection(
     String collectionName,
   ) {

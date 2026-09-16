@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:slanh_pet_application/core/navigation/bottom_nav_routes.dart';
 import 'package:slanh_pet_application/core/widgets/navigation_bar.dart';
 import 'package:slanh_pet_application/features/home/widget_home/SearchImplement_part/search_result_screen.dart';
-import 'package:slanh_pet_application/features/market_screen/market_screen.dart';
 
 // import 'package:slanh_pet_application/features/home/widget_home/search_implement.dart';
 

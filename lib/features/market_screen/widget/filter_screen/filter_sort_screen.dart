@@ -60,9 +60,7 @@ class _FilterSortScreenState extends State<FilterSortScreen> {
 
   RangeValues priceRange = const RangeValues(0, 328);
 
-
   // RATING
- 
 
   String selectedRating = "4.5+";
 

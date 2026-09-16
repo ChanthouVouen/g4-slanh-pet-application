@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:slanh_pet_application/core/constants/app_colors.dart';
+import 'package:slanh_pet_application/core/navigation/auth_gate.dart';
 import 'package:slanh_pet_application/core/services/auth/auth_service.dart';
 import 'package:slanh_pet_application/core/utility/form_validators.dart';
 import 'package:slanh_pet_application/core/utility/ui_helper.dart';
@@ -8,7 +9,6 @@ import 'package:slanh_pet_application/core/widgets/custom_gender_dropdown.dart';
 import 'package:slanh_pet_application/core/widgets/customer_text_field.dart';
 import 'package:slanh_pet_application/core/widgets/terms_checkbox.dart';
 import 'package:slanh_pet_application/features/auth/login/login.dart';
-import 'package:slanh_pet_application/features/home/home_page.dart';
 import 'package:slanh_pet_application/core/widgets/password_text_field.dart';
 import 'package:slanh_pet_application/core/constants/register/register_string.dart';
 
@@ -108,7 +108,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
     if (result == 'success') {
       UiHelpers.showSnackBar(context, RegisterString.successMessage);
       Navigator.of(context).pushAndRemoveUntil(
-        MaterialPageRoute<void>(builder: (_) => const HomePage()),
+        MaterialPageRoute<void>(builder: (_) => const AuthGate()),
         (_) => false,
       );
     } else {

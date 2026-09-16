@@ -116,7 +116,15 @@ class _SearchResultScreenState extends State<SearchResultScreen> {
                       currentSearchQuery,
                     ),
 
-                    builder: (products) {
+                    builder: (allProducts) {
+                      // Hide products the shop has explicitly marked out of
+                      // stock; a missing `stock` field means it isn't
+                      // tracked, so keep showing it.
+                      final products = allProducts.where((doc) {
+                        final stock = doc.data()['stock'];
+                        return stock == null || (stock as num).toInt() > 0;
+                      }).toList();
+
                       if (products.isEmpty) {
                         return Padding(
                           padding: const EdgeInsets.all(30),

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../models/address_model.dart';
+import 'package:slanh_pet_application/core/models/profile/address.dart';
 import 'package:slanh_pet_application/core/widgets/navigation_bar.dart';
 
 class AddressFormScreen extends StatefulWidget {

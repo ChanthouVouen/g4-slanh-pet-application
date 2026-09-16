@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:slanh_pet_application/core/services/shop/shop_service.dart';
 
-import '../models/product_models.dart';
-import '../models/shop_model.dart';
+import 'package:slanh_pet_application/core/models/commerce/product.dart';
+import 'package:slanh_pet_application/core/models/commerce/shop.dart';
 import 'store_row_content.dart';
 import 'store_row_skeleton.dart';
-
 
 class StoreRow extends StatefulWidget {
   const StoreRow({super.key, required this.product});
@@ -42,7 +41,6 @@ class _StoreRowState extends State<StoreRow> {
       builder: (context, snapshot) {
         final shop = snapshot.data;
         if (shop != null) return StoreRowContent(shop: shop);
-
 
         if (snapshot.connectionState != ConnectionState.done) {
           return const StoreRowSkeleton(reason: null);

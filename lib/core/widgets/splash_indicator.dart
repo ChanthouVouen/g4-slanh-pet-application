@@ -2,11 +2,7 @@ import 'package:flutter/material.dart';
 import '../constants/app_colors.dart';
 
 class SplashIndicator extends StatelessWidget {
-  const SplashIndicator({
-    super.key,
-    this.currentPage = 0,
-    this.pageCount = 3,
-  });
+  const SplashIndicator({super.key, this.currentPage = 0, this.pageCount = 3});
 
   final int currentPage;
   final int pageCount;

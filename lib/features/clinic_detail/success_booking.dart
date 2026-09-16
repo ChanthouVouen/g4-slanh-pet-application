@@ -5,7 +5,7 @@ import 'package:slanh_pet_application/features/clinic_detail/widgets/success/suc
 import 'package:slanh_pet_application/features/order_booking/order_booking.dart';
 import 'package:slanh_pet_application/features/services/service.dart';
 
-import 'models/booking_model.dart';
+import 'package:slanh_pet_application/core/models/booking.dart';
 
 class BookingConfirmedScreen extends StatelessWidget {
   const BookingConfirmedScreen({super.key, required this.summary});

@@ -2,13 +2,13 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:slanh_pet_application/core/utility/ui_helper.dart';
 
-import 'cart_store.dart';
-import 'models/delivery_address.dart';
+import 'package:slanh_pet_application/core/models/orders/delivery_address.dart';
+import 'package:slanh_pet_application/core/models/orders/payment_method.dart';
+import 'package:slanh_pet_application/core/services/orders/delivery_address_service.dart';
+import 'package:slanh_pet_application/core/services/orders/product_order_service.dart';
+import 'package:slanh_pet_application/core/state/cart_store.dart';
 import 'models/order_summary.dart';
-import 'models/payment_method.dart';
 import 'order_confirmed_screen.dart';
-import 'services/delivery_address_service.dart';
-import 'services/product_order_service.dart';
 import 'widgets/checkout/delivery_address_card.dart';
 import 'widgets/checkout/edit_address_sheet.dart';
 import 'widgets/checkout/order_items_card.dart';
@@ -83,6 +83,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
     final items = CartStore.instance.items;
     final itemCount = items.length;
     String? orderRef;
+    String? failureMessage;
     try {
       orderRef = await _orderService.createOrder(
         items: items,
@@ -90,9 +91,17 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
         paymentMethod: _paymentMethod,
         deliveryAddress: _address,
       );
+    } on ProductUnavailableException catch (e) {
+      debugPrint('CheckoutScreen._placeOrder: ${e.message}');
+      failureMessage = e.message;
+    } on FirebaseException catch (e) {
+      debugPrint('CheckoutScreen._placeOrder: order creation failed: $e');
+      failureMessage = e.code == 'permission-denied'
+          ? 'Order permission was denied. Please contact support.'
+          : 'Could not place your order: ${e.message ?? e.code}';
     } catch (e) {
       debugPrint('CheckoutScreen._placeOrder: order creation failed: $e');
-      orderRef = null;
+      failureMessage = 'Could not place your order. Please try again.';
     }
 
     if (!mounted) return;
@@ -101,7 +110,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
       setState(() => _isPlacingOrder = false);
       UiHelpers.showSnackBar(
         context,
-        'Could not place your order. Please check your connection and try again.',
+        failureMessage ?? 'Could not place your order. Please try again.',
         isError: true,
       );
       return;
@@ -119,7 +128,9 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
     setState(() => _isPlacingOrder = false);
 
     Navigator.of(context).pushReplacement(
-      MaterialPageRoute(builder: (context) => OrderConfirmedScreen(summary: summary)),
+      MaterialPageRoute(
+        builder: (context) => OrderConfirmedScreen(summary: summary),
+      ),
     );
   }
 

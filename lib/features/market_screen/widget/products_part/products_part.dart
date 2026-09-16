@@ -1,13 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:slanh_pet_application/core/services/fireStore_service/firestore_service.dart';
+import 'package:slanh_pet_application/core/utility/ui_helper.dart';
 import 'package:slanh_pet_application/core/widgets/firestore_stream_builder.dart';
-import 'package:slanh_pet_application/features/cart/cart_store.dart';
+import 'package:slanh_pet_application/core/state/cart_store.dart';
 import 'package:slanh_pet_application/features/home/widget_home/Popular_product_part/popular_productcard.dart';
 import 'package:slanh_pet_application/features/product_detail_screens/product_detail.dart';
 
+typedef AddToCartDetails = ({
+  String productName,
+  double price,
+  String? shopId,
+  int? stock,
+  String? productId,
+});
+
 class ProductPart extends StatelessWidget {
   final String selectedCategory;
-  final void Function(String productName, double price)? onAddToCart;
+  final void Function(AddToCartDetails details)? onAddToCart;
   final String searchQuery;
 
   const ProductPart({
@@ -34,7 +43,16 @@ class ProductPart extends StatelessWidget {
                     ? FirestoreService().searchProducts(searchQuery)
                     : FirestoreService().getProductsByType(selectedCategory),
 
-                builder: (products) {
+                builder: (allProducts) {
+                  // Hide products the shop has explicitly marked out of
+                  // stock; a missing `stock` field means it isn't tracked,
+                  // so keep showing it (backward-compatible with older
+                  // products that predate stock tracking).
+                  final products = allProducts.where((doc) {
+                    final stock = doc.data()['stock'];
+                    return stock == null || (stock as num).toInt() > 0;
+                  }).toList();
+
                   // Check if no products were found
                   if (products.isEmpty) {
                     return Padding(
@@ -73,6 +91,7 @@ class ProductPart extends StatelessWidget {
                       final productName = data['name'] ?? 'Product';
                       final productPrice =
                           (data['price'] as num?)?.toDouble() ?? 0.0;
+                      final stock = (data['stock'] as num?)?.toInt();
 
                       return GestureDetector(
                         onTap: () => Navigator.push(
@@ -88,13 +107,30 @@ class ProductPart extends StatelessWidget {
                           rating: (data['rating'] as num?)?.toDouble() ?? 0.0,
                           price: productPrice,
                           onAddToCart: () {
+                            final shopId = data['shopid'] as String?;
                             if (onAddToCart != null) {
-                              onAddToCart!(productName, productPrice);
+                              onAddToCart!((
+                                productName: productName,
+                                price: productPrice,
+                                shopId: shopId,
+                                stock: stock,
+                                productId: product.id,
+                              ));
                             } else {
-                              CartStore.instance.addItem(
+                              final added = CartStore.instance.addItem(
                                 productName,
                                 productPrice,
+                                shopId: shopId,
+                                maxStock: stock,
+                                productId: product.id,
                               );
+                              if (!added) {
+                                UiHelpers.showSnackBar(
+                                  context,
+                                  'Only $stock in stock.',
+                                  isError: true,
+                                );
+                              }
                             }
                           },
                         ),

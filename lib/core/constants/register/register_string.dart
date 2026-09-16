@@ -50,6 +50,5 @@ class RegisterString {
       'Please agree to the terms of service.';
 
   static const String successMessage = 'Account created successfully.';
-  static const String genericError =
-      'Something went wrong. Please try again.';
+  static const String genericError = 'Something went wrong. Please try again.';
 }

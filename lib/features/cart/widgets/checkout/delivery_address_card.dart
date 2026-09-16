@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:slanh_pet_application/core/constants/app_colors.dart';
 import 'package:slanh_pet_application/core/widgets/section_card.dart';
 
-import '../../models/delivery_address.dart';
+import 'package:slanh_pet_application/core/models/orders/delivery_address.dart';
 
 class DeliveryAddressCard extends StatelessWidget {
   const DeliveryAddressCard({

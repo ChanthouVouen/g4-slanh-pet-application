@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:slanh_pet_application/core/utility/ui_helper.dart';
 
-import 'cart_store.dart';
+import 'package:slanh_pet_application/core/state/cart_store.dart';
 import 'checkout_screen.dart';
 import 'widgets/cart_item_tile.dart';
 import 'widgets/cart_summary_bar.dart';
@@ -49,8 +50,17 @@ class CartScreen extends StatelessWidget {
                             final item = items[index];
                             return CartItemTile(
                               item: item,
-                              onIncrement: () => CartStore.instance
-                                  .increaseQuantity(item.name),
+                              onIncrement: () {
+                                final increased = CartStore.instance
+                                    .increaseQuantity(item.name);
+                                if (!increased) {
+                                  UiHelpers.showSnackBar(
+                                    context,
+                                    'Only ${item.maxStock} in stock.',
+                                    isError: true,
+                                  );
+                                }
+                              },
                               onDecrement: () => CartStore.instance
                                   .decreaseQuantity(item.name),
                             );

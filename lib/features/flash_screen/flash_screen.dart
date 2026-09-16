@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:slanh_pet_application/core/constants/app_colors.dart';
 import 'package:slanh_pet_application/core/constants/flash_screen/flash_screen_string.dart';
 import 'package:slanh_pet_application/features/onboarding_screen/onbording_screen.dart';
-import 'package:slanh_pet_application/core/widgets/slanh_pet_logo.dart';
 import 'package:slanh_pet_application/core/widgets/decorative_circle.dart';
 
 class FlashScreen extends StatefulWidget {
@@ -72,7 +71,7 @@ class _FlashScreenState extends State<FlashScreen> {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    const SlanhPetLogo(),
+                    // const SlanhPetLogo(),
                     const SizedBox(height: 32),
 
                     const Text(

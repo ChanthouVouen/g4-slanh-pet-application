@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:slanh_pet_application/core/constants/app_colors.dart';
 
-import '../models/product_models.dart';
+import 'package:slanh_pet_application/core/models/commerce/product.dart';
 import 'reviews_summary.dart';
 import 'spec_grid.dart';
 

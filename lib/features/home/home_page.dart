@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:slanh_pet_application/core/navigation/bottom_nav_routes.dart';
 import 'package:slanh_pet_application/core/widgets/navigation_bar.dart';
 import 'package:slanh_pet_application/features/cart/cart_screen.dart';
-import 'package:slanh_pet_application/features/cart/cart_store.dart';
+import 'package:slanh_pet_application/core/state/cart_store.dart';
 import 'package:slanh_pet_application/features/home/widget_home/AdoptPet_part/adopt_banner.dart';
 import 'package:slanh_pet_application/features/home/widget_home/Community_part/community_part.dart';
 import 'package:slanh_pet_application/features/home/widget_home/Discount_part/discount_banner.dart';

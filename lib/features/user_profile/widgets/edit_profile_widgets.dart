@@ -3,7 +3,7 @@ import 'dart:io' show Platform;
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
-import '../models/profile_model.dart';
+import 'package:slanh_pet_application/core/models/profile/profile.dart';
 import 'profile_image.dart';
 
 /// image_picker has no camera backend on desktop (Windows/macOS/Linux) —
@@ -133,7 +133,7 @@ class _ProfilePhotoEditorState extends State<ProfilePhotoEditor> {
         source: source,
         imageQuality: 85,
         maxWidth: 6000,
-        maxHeight:6000
+        maxHeight: 6000,
       );
       if (image == null) return;
       setState(() {

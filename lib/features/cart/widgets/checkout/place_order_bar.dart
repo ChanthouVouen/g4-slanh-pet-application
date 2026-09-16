@@ -23,7 +23,11 @@ class PlaceOrderBar extends StatelessWidget {
         decoration: const BoxDecoration(
           color: Colors.white,
           boxShadow: [
-            BoxShadow(color: Colors.black12, blurRadius: 6, offset: Offset(0, -2)),
+            BoxShadow(
+              color: Colors.black12,
+              blurRadius: 6,
+              offset: Offset(0, -2),
+            ),
           ],
         ),
         child: AuthSubmitButton(
